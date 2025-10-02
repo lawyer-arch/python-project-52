@@ -16,7 +16,7 @@ build:
 	./build.sh
 
 install:
-	uv install
+	uv sync
 
 collectstatic:
 	python manage.py collectstatic --noinput
