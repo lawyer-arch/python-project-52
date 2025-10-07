@@ -30,7 +30,7 @@ SECRET_KEY = os.getenv(
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
 # ALLOWED_HOSTS для задания
-ALLOWED_HOSTS = ["webserver"]
+ALLOWED_HOSTS = ["webserver", "127.0.0.1", "localhost"]
 
 # Добавляем домен Render автоматически, если он есть
 render_host = os.getenv("RENDER_EXTERNAL_HOSTNAME")
@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'task_manager',
-
+    'django_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +141,8 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DJANGO_BOOTSTRAP5 = {
+    'css_url': 'https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css',
+    'javascript_url': 'https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js',
+}
