@@ -18,6 +18,8 @@ dependencies = [
   "dj-database-url>=2.3.0",
   "django-bootstrap5>=24.3",
   "django-filter>=24.3",
+  "pytest>=8.4.2",
+  "pytest-django>=4.11.1",
 ]
 
 [tool.setuptools]
@@ -28,5 +30,9 @@ package-data = {"task_manager" = ["templates/*"]}
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[pytest]
+DJANGO_SETTINGS_MODULE = "task_manager.settings"
+python_files = "tests/*.py"
 
 

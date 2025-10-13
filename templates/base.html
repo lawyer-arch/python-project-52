@@ -5,13 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Task Manager{% endblock %}</title>
     {% load django_bootstrap5 %}
+    {% load i18n %}
     {% bootstrap_css %}
 </head>
 <body>
     <!-- Navbar static из официальной документации Bootstrap -->
     <nav class="navbar navbar-expand-lg rounded mx-2 mt-1 shadow-sm" style="background-color: #e6e6fa;">
         <div class="container-fluid">
-            <a class="navbar-brand fw-bold text-dark" href="#">Менеджер задач</a>
+            <a class="navbar-brand fw-bold text-dark" href="/">{% trans "Task Manager" %}</a>
             
             <!--Кнопка "БУРГЕР" меню для мобильных устройств-->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
@@ -23,24 +24,33 @@
               <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav">
                   <li class="nav-item">
-                    <a class="nav-link" href="/users/">Пользователи</a>
+                    <a class="nav-link" href="/users/">{% trans "Users" %}</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/login/">Вход</a>
+                    <a class="nav-link" href="/login/">{% trans "Login" %}</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="/users/create/">Регистрация</a> 
+                    <a class="nav-link" href="/users/create/">{% trans "Registration" %}</a> 
                   </li>
                 </ul>
               </div>
         </div>
       </nav>
-
-    {% bootstrap_messages %}
-    {% block content %}
-    {% endblock %}
-
+      {% bootstrap_messages %}
+      {% block content %}
+      {% endblock %}
+      <!-- Фиксированный футер -->
+      <footer class="fixed-bottom bg-light py-3 border-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <a target="_blank" href="https://ru.hexlet.io" class="text-dark">Hexlet</a>
+                </div>
+            </div>
+        </div>
+      </footer>
 
     {% bootstrap_javascript %}
+
 </body>
 </html>

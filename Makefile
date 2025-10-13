@@ -10,7 +10,7 @@ lint:
 
 # Тесты (можно расширить позже)
 test:
-	pytest
+	pytest --ds=task_manager.settings
 
 build:
 	./build.sh
@@ -26,3 +26,8 @@ migrate:
 
 render-start:
 	gunicorn task_manager.wsgi:application
+
+trans:
+	python manage.py makemessages -l ru
+	python manage.py compilemessages
+
