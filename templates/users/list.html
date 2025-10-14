@@ -4,16 +4,16 @@
 
 {% block content %}
 <div class="container my-4">
-    <h1>{% trans "Users" %}</h1>
+    <h1>{% trans "Пользователи" %}</h1>
 
     <table class="table table-striped table-hover align-middle">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>{% trans "Username" %}</th>
-                <th>{% trans "Full name" %}</th>
-                <th>{% trans "Creation date" %}</th>
-                <th>{% trans "Actions" %}</th>
+                <th>{% trans "Имя пользователя" %}</th>
+                <th>{% trans "Полное имя" %}</th>
+                <th>{% trans "Дата создания" %}</th>
+                <th>{% trans "Действия" %}</th>
             </tr>
         </thead>
         <tbody>
@@ -25,17 +25,17 @@
                 <td>{{ user.date_joined|date:"d.m.Y H:i" }}</td>
                 <td>
                     <a href="{% url 'users:users_update' user.id %}" class="btn btn-sm btn-outline-primary">
-                        {% trans "Change" %}
+                        {% trans "Изменить" %}
                     </a>
                     <a href="{% url 'users:users_delete' user.id %}" class="btn btn-sm btn-outline-danger">
-                        {% trans "Delete" %}
+                        {% trans "Удалить" %}
                     </a>
                 </td>
             </tr>
             {% empty %}
             <tr>
                 <td colspan="5" class="text-center text-muted">
-                    {% trans "No users" %}
+                    {% trans "Нет пользователей" %}
                 </td>
             </tr>
             {% endfor %}

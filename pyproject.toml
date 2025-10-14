@@ -35,4 +35,11 @@ build-backend = "setuptools.build_meta"
 DJANGO_SETTINGS_MODULE = "task_manager.settings"
 python_files = "tests/*.py"
 
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I"]
+ignore = ["I001"]
+
 

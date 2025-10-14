@@ -6,7 +6,10 @@ start:
 
 # Запуск проверки стиля кода с помощью Ruff
 lint:
-	ruff .
+	ruff check .
+
+lint-fix:
+	ruff check . --fix
 
 # Тесты (можно расширить позже)
 test:
@@ -30,4 +33,3 @@ render-start:
 trans:
 	python manage.py makemessages -l ru
 	python manage.py compilemessages
-
