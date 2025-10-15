@@ -26,6 +26,7 @@ urlpatterns = [
     path("login/", CustomLoginView.as_view(template_name="registration/login.html"), name="login"),
     path("logout/", CustomLogoutView.as_view(), name="logout"),
     path("users/", include("users.urls")),
+    path("statuses/", include("statuses.urls")),
     path("admin/", admin.site.urls),
     path("i18n/", include("django.conf.urls.i18n")),
 ]

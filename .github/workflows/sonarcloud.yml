@@ -1,0 +1,39 @@
+name: SonarCloud
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  sonar:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.13
+
+      - name: Install dependencies
+        run: |
+          uv install --no-cache
+
+      - name: Run Ruff
+        run: |
+          ruff check .
+
+      - name: Run tests with coverage
+        run: |
+          pytest --cov=. --cov-report=xml
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          projectKey: python-project-52
+          organization: <твоя_организация>
+          token: ${{ secrets.SONAR_TOKEN }}
