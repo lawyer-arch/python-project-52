@@ -2,6 +2,7 @@ import logging
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -65,21 +66,31 @@ class StatusUpdateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin,
 class StatusDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Status
     template_name = "statuses/delete.html"
-    success_url = reverse_lazy("statuses:statuses_list")  # Редирект на список после удаления
+    success_url = reverse_lazy("statuses:statuses_list")
 
-    def delete(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         """
         Логирование удаления и проверка связанных задач.
         Если объект используется в задачах, удаление запрещено.
         """
         self.object = self.get_object()
+        
+        # Проверяем наличие связанных задач ДО запуска стандартного удаления
         if self.object.task_set.exists():
             messages.error(request, _("Невозможно удалить статус, он используется задачами!"))
             return redirect(self.success_url)
 
-        # Логируем удаление
-        logger.info(f"Статус удалён: {self.object}")
-        messages.success(request, _("Статус успешно удалён!"))
-
-        return super().delete(request, *args, **kwargs)
-
+        # Если задач нет, продолжаем удаление
+        try:
+            # Удаляем объект вручную
+            self.object.delete()
+            logger.info(f"Статус удалён: {self.object}")
+            messages.success(request, _("Статус успешно удалён!"))
+        except ObjectDoesNotExist:
+            # Объект уже удалён кем-то другим
+            messages.warning(request, _("Объект уже удалён."))
+        except Exception as e:
+            # Обработка любых неожиданных ошибок
+            messages.error(request, f"{_('Возникла ошибка при удалении')}: {str(e)}")
+        
+        return redirect(self.success_url)

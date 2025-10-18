@@ -113,7 +113,8 @@ msgstr "Update user"
 
 #: templates/users/update.html:12
 msgctxt "verb"
-msgid "Update"
+msgid "обновить"
+msgstr "Update"
 
 #: users/views.py:41
 msgid "Пользователь успешно зарегистрирован!"

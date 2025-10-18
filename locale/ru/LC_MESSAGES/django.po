@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-14 11:31+0000\n"
+"POT-Creation-Date: 2025-10-15 05:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,23 +19,24 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
 #: statuses/models.py:6 templates/statuses/list.html:13
 msgid "Имя"
 msgstr ""
 
-#: statuses/views.py:45
+#: statuses/views.py:46
 msgid "Статус успешно создан!"
 msgstr ""
 
-#: statuses/views.py:54
+#: statuses/views.py:58
 msgid "Статус успешно изменён!"
 msgstr ""
 
-#: statuses/views.py:67
+#: statuses/views.py:77
 msgid "Невозможно удалить статус, он используется задачами!"
 msgstr ""
 
-#: statuses/views.py:70
+#: statuses/views.py:82
 msgid "Статус успешно удалён!"
 msgstr ""
 
@@ -105,6 +106,24 @@ msgctxt "verb"
 msgid "Создать"
 msgstr ""
 
+#: templates/statuses/delete.html:7 templates/users/delete.html:7
+msgid "Подтвердить удаление"
+msgstr ""
+
+#: templates/statuses/delete.html:8
+msgid "Вы уверены, что хотите удалить статус?"
+msgstr ""
+
+#: templates/statuses/delete.html:12 templates/users/delete.html:12
+#: templates/users/list.html:31
+msgid "Удалить"
+msgstr ""
+
+#: templates/statuses/delete.html:13 templates/statuses/update.html:13
+#: templates/users/delete.html:13 templates/users/update.html:13
+msgid "Отмена"
+msgstr ""
+
 #: templates/statuses/list.html:14 templates/users/list.html:15
 msgid "Дата создания"
 msgstr ""
@@ -117,13 +136,17 @@ msgstr ""
 msgid "Изменить"
 msgstr ""
 
-#: templates/statuses/list.html:29 templates/users/delete.html:12
-#: templates/users/list.html:31
-msgid "Удалить"
+#: templates/statuses/list.html:37
+msgid "Нет статуса"
 msgstr ""
 
-#: templates/statuses/list.html:36
-msgid "Нет статуса"
+#: templates/statuses/update.html:9
+msgid "Обновить статус"
+msgstr ""
+
+#: templates/statuses/update.html:12 templates/users/update.html:12
+msgctxt "verb"
+msgid "Обновить"
 msgstr ""
 
 #: templates/users/create.html:9
@@ -135,16 +158,8 @@ msgctxt "verb"
 msgid "Зарегистрироваться"
 msgstr ""
 
-#: templates/users/delete.html:7
-msgid "Подтвердить удаление"
-msgstr ""
-
 #: templates/users/delete.html:8
 msgid "Вы уверены, что хотите удалить пользователя"
-msgstr ""
-
-#: templates/users/delete.html:13 templates/users/update.html:13
-msgid "Отмена"
 msgstr ""
 
 #: templates/users/list.html:13
@@ -161,11 +176,6 @@ msgstr ""
 
 #: templates/users/update.html:9
 msgid "Обновить пользователя"
-msgstr ""
-
-#: templates/users/update.html:12
-msgctxt "verb"
-msgid "Обновить"
 msgstr ""
 
 #: users/views.py:39

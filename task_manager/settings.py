@@ -13,19 +13,21 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 import dj_database_url
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-s+dwq2jlkiwhu4fe^m1j^dfw%n&yo=%4lca&4je9vyilj)0kxh")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG")
 
 # ALLOWED_HOSTS для задания
 ALLOWED_HOSTS = ["webserver", "127.0.0.1", "localhost"]
@@ -49,6 +51,7 @@ INSTALLED_APPS = [
     "django_bootstrap5",
     "users",
     "statuses",
+    "tasks",
 ]
 
 MIDDLEWARE = [
@@ -130,10 +133,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
+# Установите корневую директорию для статических файлов
+STATIC_URL = '/static/'
+
+# Директория, где собираются статические файлы
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Пути к директориям с вашими собственными статическими файлами
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 # Default primary key field type

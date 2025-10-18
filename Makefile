@@ -31,6 +31,10 @@ migrate:
 render-start:
 	gunicorn task_manager.wsgi:application
 
+
 trans:
-	python manage.py makemessages -l ru
-	python manage.py compilemessages
+	# Компилируем только свои .po файлы в каталоге проекта, игнорируя .venv
+	find ./locale -name "*.po" | while read po; do \
+		dir=$$(dirname $$po); \
+		msgfmt $$po -o $$dir/$$(basename $$po .po).mo || true; \
+	done

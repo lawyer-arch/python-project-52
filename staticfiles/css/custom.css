@@ -1,0 +1,18 @@
+/* Скрываем избыточную высоту и границу при закрытии */
+.custom-dropdown {
+    height: calc(2em + .75rem); /* Нормальная высота обычного select */
+    overflow-y: hidden; /* Скрываем прокрутку */
+    appearance: none; /* Удаляем нативную стрелку выпадающего списка */
+    background-image: linear-gradient(to bottom right, transparent 50%, currentColor 50%), linear-gradient(#fff, #fff);
+    background-repeat: no-repeat, repeat;
+    background-position: right .75rem center, 0 0;
+    background-size: 8px 10px, 100%;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Открываем список при focus */
+.custom-dropdown:focus {
+    height: auto; /* Автоматическая высота */
+    overflow-y: scroll; /* Прокрутка включается */
+    max-height: 200px; /* Максимальная высота раскрываемого списка */
+}
