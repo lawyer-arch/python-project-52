@@ -1,0 +1,23 @@
+Metadata-Version: 2.4
+Name: hexlet-code
+Version: 0.1.0
+Summary: Менеджер задач.
+Author-email: Pavel Anikin <PavelDidko@gmail.com>
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: django>=5.2.7
+Requires-Dist: gunicorn>=23.0.0
+Requires-Dist: psycopg2-binary>=2.9.9
+Requires-Dist: python-dotenv>=0.21.0
+Requires-Dist: requests>=2.32.4
+Requires-Dist: dj-database-url>=2.3.0
+Requires-Dist: django-bootstrap5>=24.3
+Requires-Dist: django-filter>=24.3
+Provides-Extra: dev
+Requires-Dist: ruff>=0.13.2; extra == "dev"
+Requires-Dist: uv>=0.5.16; extra == "dev"
+Requires-Dist: pytest>=8.4.2; extra == "dev"
+Requires-Dist: pytest-django>=4.11.1; extra == "dev"
+
+### Hexlet tests and linter status:
+[![Actions Status](https://github.com/lawyer-arch/python-project-52/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/lawyer-arch/python-project-52/actions)

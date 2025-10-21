@@ -1,0 +1,71 @@
+# Игнорирование байт-кода Python
+*.pyc
+*.pyo
+.env
+*.log
+*.tmp
+
+# Игнорирование файлов __pycache__
+__pycache__/
+
+# Игнорирование виртуальных окружений
+.venv/
+
+# SQLite база данных
+db.sqlite3
+db.sqlite3-journal
+
+# Временные файлы сборки
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Директории сборки
+build/
+dist/
+eggs/
+.eggs/
+parts/
+var/
+wheels/
+**/migrations/
+
+# Файлы разработки
+.DS_Store
+*.pyc
+*.pyo
+*.pyd
+
+# IDE файлы
+.idea/
+*.iml
+
+# Кэш и временные файлы
+.cache/
+.tox/
+.coverage
+.pytest_cache/
+
+# Файлы документации
+docs/_build/
+
+# Celery файлы
+celerybeat-schedule
+celerybeat.pid
+
+# PyCharm и другие IDE
+.idea/
+.vscode/
+
+# Временные файлы разработки
+*.swp
+*.swo
+*.swn
+
+# Файлы отладки
+.coverage
+.coverage.*
+
+# Временные директории
+temp/
+tmp/
