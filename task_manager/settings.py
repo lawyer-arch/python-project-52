@@ -30,7 +30,10 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 DEBUG = os.getenv("DEBUG")
 
 # ALLOWED_HOSTS для задания
-ALLOWED_HOSTS = ["webserver", "127.0.0.1", "localhost"]
+ALLOWED_HOSTS = os.getenv(
+    "ALLOWED_HOSTS",
+    "webserver,127.0.0.1,localhost"
+).split(",")
 
 # Добавляем домен Render автоматически, если он есть
 render_host = os.getenv("RENDER_EXTERNAL_HOSTNAME")
