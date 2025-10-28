@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block content %}
+<form action="{% url 'labels:labels_update' label.id %}" method="post">
+    <div class="row justify-content-center">
+        <div class="col-sm-4">
+            <h1 class="my-4">{% trans "Изменить метку" %}</h1>
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <input class="btn btn-primary" type="submit" value="{% trans 'Обновить' context 'verb' %}">
+            <a href="{% url 'labels:labels_list' %}" class="btn btn-secondary">{% trans 'Отмена' %}</a>
+        </div>
+    </div>
+</form>
+{% endblock %}

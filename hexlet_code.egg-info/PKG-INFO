@@ -14,10 +14,15 @@ Requires-Dist: dj-database-url>=2.3.0
 Requires-Dist: django-bootstrap5>=24.3
 Requires-Dist: django-filter>=24.3
 Provides-Extra: dev
-Requires-Dist: ruff>=0.13.2; extra == "dev"
+Requires-Dist: ruff>=0.14.1; extra == "dev"
 Requires-Dist: uv>=0.5.16; extra == "dev"
 Requires-Dist: pytest>=8.4.2; extra == "dev"
 Requires-Dist: pytest-django>=4.11.1; extra == "dev"
 
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/lawyer-arch/python-project-52/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/lawyer-arch/python-project-52/actions)
+
+
+## Деплой и доступ к сайту:
+
+Сайт развернут и доступен по адресу: [task-manager-huiy.onrender.com](https://task-manager-dbze.onrender.com)

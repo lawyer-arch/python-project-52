@@ -24,21 +24,27 @@ load_dotenv()
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv("DEBUG")
+DEBUG = os.environ.get("DEBUG", "True").lower() == "true"
 
 # ALLOWED_HOSTS для задания
-ALLOWED_HOSTS = os.getenv(
-    "ALLOWED_HOSTS",
-    "webserver,127.0.0.1,localhost"
-).split(",")
+ALLOWED_HOSTS = [
+    host.strip().lower()
+    for host in os.environ.get(
+        "ALLOWED_HOSTS",
+        "webserver,127.0.0.1,localhost"
+    ).split(",")
+    if host.strip()
+]
 
 # Добавляем домен Render автоматически, если он есть
-render_host = os.getenv("RENDER_EXTERNAL_HOSTNAME")
+render_host = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
 if render_host:
-    ALLOWED_HOSTS.append(render_host)
+    clean_host = render_host.strip().lower()
+    if clean_host not in ALLOWED_HOSTS:  # избегаем дубликатов
+        ALLOWED_HOSTS.append(clean_host)
 
 
 # Application definition

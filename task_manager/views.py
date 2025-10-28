@@ -17,7 +17,7 @@ class HomePageView(TemplateView):
         return context
 
 class CustomLogoutView(LogoutView):
-    next_page = '/'  # редирект после выхода
+    next_page = '/'
     LOGGRD_OUT = _('Вы разлогинены')
 
     def dispatch(self, request, *args, **kwargs):
