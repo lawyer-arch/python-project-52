@@ -4,6 +4,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
+from django.http import HttpResponse
+
+
 class HomePageView(TemplateView):
     template_name = 'index.html'
 
