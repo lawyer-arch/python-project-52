@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container-fluid my-4">
-    <div class="row">
+    <div class="row justify-content-center">
 
         <!--Левая сторона: карточка с фильтрацией-->
         <div class="col-md-3 col-xl-2">
@@ -31,17 +31,17 @@
                         <select name="executor" class="form-select" id="executor">
                             <option value="" selected>---------</option>
                             {% for executor in filter.form.executor.field.choices %}
-                            <option value="{{ executor.1 }}">{{ executor.1 }}</option>
+                            <option value="{{ executor.0 }}">{{ executor.1 }}</option>
                             {% endfor %}
                         </select>
                     </div>
 
                     <!--Третье поле фильтра по Меткам (label)-->
                     <div class="mb-3 mx-2">
-                        <label for="label" class="form-label">{% trans "Метки" %}</label>
-                        <select name="label" class="form-select" id="label">
+                        <label for="labels" class="form-label">{% trans "Метки" %}</label>
+                        <select name="labels" class="form-select" id="label">
                             <option value="" selected>---------</option>
-                            {% for value, name in filter.form.labels.field.choices %}
+                            {% for value, name in filter.form.label.field.choices %}
                             <option value="{{ value }}">{{ name }}</option>
                             {% endfor %}
                         </select>
@@ -61,7 +61,7 @@
                    
         <!--Правоя сторона: форам со списком-->
         <div class="col-md-9 col-xl-9">
-            <h1 class="my-4">{% trans "Задачи" %}</h1>
+            <h1 class="my-1">{% trans "Задачи" %}</h1>
             <a class="btn btn-primary mb-3" href="{% url 'tasks:tasks_create'%}">{% trans "Создать задачу" %}</a>
 
             <form class="my-4">

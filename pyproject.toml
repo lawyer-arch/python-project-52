@@ -30,21 +30,22 @@ dev = [
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.ruff.lint]
-select = ["E", "W", "F", "I"]
-ignore = ["I001"]
-
 [tool.setuptools]
 packages = ["task_manager"]
 package-dir = {"" = "."}
-package-data = {"task_manager" = ["templates/*"]}
-
-[pytest]
-DJANGO_SETTINGS_MODULE = "task_manager.settings"
-python_files = "tests/*.py"
+package-data = { "task_manager" = ["templates/**/*"] }
 
 [tool.ruff]
 line-length = 120
-exclude = [
-    "*/migrations/*"
+select = ["E", "W", "F", "I"]
+ignore = ["I001"]
+exclude = ["*/migrations/*"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "task_manager.settings"
+python_files = "tests/*.py"
+
+[dependency-groups]
+dev = [
+    "pytest-django>=4.11.1",
 ]

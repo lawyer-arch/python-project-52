@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django_filters.views import FilterView
 
 from .models import Label
+from tasks.models import Task
 
 
 logger = logging.getLogger("labels")
@@ -79,26 +80,30 @@ class LabelUpdateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin, 
 # ---------------------------
 # Удаление метки
 # ---------------------------
-class LabelDeleteView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, DeleteView):
+class LabelDeleteView(LoginRequiredMixin, DeleteView):
     model = Label
     template_name = "labels/delete.html"
     context_object_name = "label"
     success_url = reverse_lazy("labels:labels_list")
-    success_message = _("Метка успешно удалена")
 
-    def test_func(self):
-        obj = self.get_object()
-        return self.request.user.is_authenticated
+    def post(self, request, *args, **kwargs):
+        """
+        Переопределяем POST, чтобы перед удалением проверить связанные задачи.
+        """
+        self.object = self.get_object()  # объект берётся по pk из URL
+        label_id = self.object.id
 
-    def handle_no_permission(self):
-        if not self.request.user.is_authenticated:
-            return redirect('labels:labels_list')
+        # Проверяем, есть ли задачи с этой меткой
+        if Task.objects.filter(labels=self.object).exists():
+            messages.error(
+                request, 
+                "Невозможно удалить метку, потому что она используется в задачах"
+            )
+            logger.warning(f"Попытка удалить метку {label_id}, связанную с задачами")
+            return redirect(self.success_url)
 
-        messages.error(self.request, _("Невозможно удалить метку, потому что она используется в задачах"))
-        return redirect('labels:labels_list')
-
-    def delete(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        logger.info(f"Метка удалена: {self.object}")
-        messages.success(request, _("Метка успешно удалена"))
-        return super().delete(request, *args, **kwargs)
+        # Если связей нет — вызываем стандартное удаление
+        response = super().post(request, *args, **kwargs)
+        messages.success(request, "Метка успешно удалена")
+        logger.info(f"Метка {label_id} удалена")
+        return response

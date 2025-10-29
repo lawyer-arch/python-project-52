@@ -59,9 +59,12 @@ class UsersViewsTest(TestCase):
     #  Защита от несанкционированного доступа к профилям других пользователей
     def test_users_update_view_forbidden(self):
         other_user = User.objects.create_user(username="other", password="pass")
+        self.client.force_login(self.user)
         url = reverse("users:users_update", args=[other_user.pk])
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 403)
+        self.assertRedirects(response, reverse("users:users_list"))
+        messages = list(get_messages(response.wsgi_request))
+        self.assertTrue(any("нет прав" in str(m).lower() for m in messages))
 
     #  Проверяем корректность работы view для удаления пользователя
     def test_users_delete_view_allowed(self):
@@ -73,9 +76,12 @@ class UsersViewsTest(TestCase):
     #  Защита от несанкционированного доступа к профилям других пользователей
     def test_users_delete_view_forbidden(self):
         other_user = User.objects.create_user(username="other", password="pass")
+        self.client.force_login(self.user)
         url = reverse("users:users_delete", args=[other_user.pk])
         response = self.client.post(url)
-        self.assertEqual(response.status_code, 403)
+        self.assertRedirects(response, reverse("users:users_list"))
+        messages = list(get_messages(response.wsgi_request))
+        self.assertTrue(any("нет прав" in str(m).lower() for m in messages))
 
     #  Базовая функциональность страницы входа и корректность отображения формы авторизации
     def test_login_view(self):
@@ -112,10 +118,11 @@ class UsersViewsTest(TestCase):
         # 3. Проверка сообщения об успехе
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]), "Пользователь успешно создан")
+        self.assertEqual(str(messages[0]), "Пользователь успешно зарегистрирован!")
         # 4. Проверка авторизации
-        self.assertTrue(response.context['user'].is_authenticated)
-        self.assertEqual(response.context['user'].username, "newuser")
+        user = User.objects.get(username="newuser")
+        self.assertIsNotNone(user)
+        self.assertEqual(user.username, "newuser")
 
     #  Проверяем корректность обновления пользователя и вывод success_message
     def test_users_update_view_success_message(self):

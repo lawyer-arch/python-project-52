@@ -29,11 +29,18 @@ class TaskFilter(django_filters.FilterSet):
     )
 
     own_task = django_filters.BooleanFilter(
-        label=_('Толлько свои задачи'),
+        label=_('Только свои задачи'),
         method='own_tasks_filter',
         widget=forms.CheckboxInput()
     )
 
+    def own_tasks_filter(self, queryset, name, value):
+        """
+        Фильтрует задачи, принадлежащие текущему пользователю (если value == True).
+        """
+        if value:
+            return queryset.filter(author=self.request.user)
+        return queryset
 
     class Meta:
         model = Task

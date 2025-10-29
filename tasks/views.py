@@ -32,15 +32,20 @@ class FormLoggerMixin:
 # ---------------------------
 # Список задач
 # ---------------------------
-class TaskListView(LoginRequiredMixin, FilterView, ListView):
+class TaskListView(LoginRequiredMixin, FilterView):
     model = Task
     template_name = 'tasks/list.html'
-    context_object_name = "tasks"
+    context_object_name = 'tasks'
     filterset_class = TaskFilter
 
+    def get_queryset(self):
+        # Берём базовый queryset и фильтруем его
+        qs = super().get_queryset()
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # filterset доступен как self.filterset
         context['filter'] = self.filterset
         return context
 
@@ -61,7 +66,7 @@ class TaskCreateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin, C
     model = Task
     template_name = 'tasks/create.html'
     context_object_name = "task"
-    fields = ['name', 'description', 'status', 'executor']
+    fields = ['name', 'description', 'status', 'executor', 'labels']
     success_url = reverse_lazy("tasks:tasks_list")
     success_message = _("Задача успешно создана")
     log_message = "Создана задача: {obj}"
@@ -78,7 +83,7 @@ class TaskUpdateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin, U
     model = Task
     template_name = 'tasks/update.html'
     context_object_name = "task"
-    fields = ['name', 'description', 'status', 'executor']
+    fields = ['name', 'description', 'status', 'executor', 'labels']
     success_url = reverse_lazy("tasks:tasks_list")
     success_message = _("Задача успешно изменена")
     log_message = "Изменена задача: {obj}"

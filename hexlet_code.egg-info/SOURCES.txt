@@ -11,6 +11,12 @@ hexlet_code.egg-info/SOURCES.txt
 hexlet_code.egg-info/dependency_links.txt
 hexlet_code.egg-info/requires.txt
 hexlet_code.egg-info/top_level.txt
+task_manager/__init__.py
+task_manager/asgi.py
+task_manager/settings.py
+task_manager/urls.py
+task_manager/views.py
+task_manager/wsgi.py
 tests/test_statuses.py
 tests/test_tasks.py
 tests/test_users.py

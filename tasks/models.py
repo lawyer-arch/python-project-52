@@ -1,11 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 from labels.models import Label
 
 
 class Task(models.Model):
-    name = models.CharField(max_length=50)
-    description = models.TextField()
+    name = models.CharField(_("Имя"), max_length=50)
+    description = models.TextField(_("Описание"))
     author = models.ForeignKey(
         User,
         on_delete=models.PROTECT,
@@ -18,18 +19,21 @@ class Task(models.Model):
         on_delete=models.PROTECT,
         null=True,
         blank=True,
+        verbose_name=_("Исполнитель"),
         related_name='tasks_executed'
     )
     status = models.ForeignKey(
         'statuses.Status',
         on_delete=models.PROTECT,
         blank=False,
-        null=False
+        null=False,
+        verbose_name=_("Статус"),
     )
     labels = models.ManyToManyField(
         Label,
         blank=True,
-        related_name='tasks'
+        related_name='tasks',
+        verbose_name=_("Метки"),
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
