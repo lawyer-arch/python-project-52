@@ -21,7 +21,7 @@ jobs:
 
       # Устанавливаем зависимости
       - name: Install dependencies
-        run: uv pip install -r pyproject.toml
+        run: pip install -r pyproject.toml
 
       # Запускаем тесты с coverage
       - name: Run tests
