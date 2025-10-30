@@ -23,14 +23,18 @@ jobs:
       - name: Install uv
         run: pip install uv
 
-      # Устанавливаем зависимости
+      # Устанавливаем зависимости проекта
       - name: Install dependencies
         run: uv pip install -e . --system
 
-      # Запускаем тесты с coverage
+      # Устанавливаем pytest и pytest-django
+      - name: Install test tools
+        run: pip install pytest pytest-cov pytest-django
+
+      # Задаём DJANGO_SETTINGS_MODULE и запускаем тесты
       - name: Run tests
         run: |
-          pip install pytest pytest-cov
+          export DJANGO_SETTINGS_MODULE=task_manager.settings
           pytest --cov=. --cov-report=xml
 
       # Запуск анализа SonarCloud
