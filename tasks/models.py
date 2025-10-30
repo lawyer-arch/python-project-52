@@ -12,7 +12,8 @@ class Task(models.Model):
         on_delete=models.PROTECT,
         related_name='tasks_authored',
         blank=False,
-        null=False
+        null=False,
+        verbose_name=_("Автор")
     )
     executor = models.ForeignKey(
         User,
@@ -36,7 +37,7 @@ class Task(models.Model):
         verbose_name=_("Метки"),
     )
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(verbose_name=_("Дата создания"), auto_now_add=True)
 
     def __str__(self):
         return self.name
