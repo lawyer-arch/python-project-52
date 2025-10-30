@@ -88,13 +88,15 @@ class TestLabelCRUD:
         url = reverse("labels:labels_delete", args=[label.pk])
         response = client_logged.post(url, follow=True)
 
-        # Проверяем, что был redirect и success_message
         assert response.status_code == 200
         messages = list(get_messages(response.wsgi_request))
-        assert any("успешно удалена" in str(m) for m in messages)
+    
+        # Проверяем, что появилось предупреждение о невозможности удаления
+        assert any("невозможно удалить" in str(m) for m in messages)
+    
+        # Метка не должна удаляться
+        assert Label.objects.filter(pk=label.pk).exists()
 
-        # На текущей реализации метка реально удалена
-        assert not Label.objects.filter(pk=label.pk).exists()
     
     
     def test_detail_label(self, client_logged, label):
