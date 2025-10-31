@@ -9,19 +9,19 @@ RUN apt-get update && apt-get install -y \
     rm -rf /var/lib/apt/lists/*
 
 # Рабочая директория
-WORKDIR /project/code
+WORKDIR /project
 
 # Копируем проект
 COPY . .
 
 # Создаем виртуальное окружение uv
 RUN python -m venv .venv
-ENV PATH="/project/code/.venv/bin:$PATH"
+ENV PATH="/project/.venv/bin:$PATH"
 
 # Устанавливаем uv и зависимости из pyproject.toml
 RUN pip install --upgrade pip
 RUN pip install uv
-RUN uv install --no-dev  # Для продакшн/hexlet можно без dev-зависимостей
+RUN uv install --no-dev
 
 # Устанавливаем зависимости для разработки и тестов
 RUN uv install --dev

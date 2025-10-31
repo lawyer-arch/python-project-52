@@ -4,7 +4,7 @@ services:
   app:
     build: .
     command: pytest -vv tests
-    working_dir: /project/code
+    working_dir: /project
 
 
 
