@@ -13,7 +13,7 @@ RUN pip install uv
 COPY . .
 
 # Устанавливаем зависимости через uv
-RUN uv pip install -e . --system
+RUN uv pip install --group dev --system -e .
 
 # Открываем порт Django
 EXPOSE 3000
