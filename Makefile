@@ -33,8 +33,4 @@ render-start:
 
 
 trans:
-	# Компилируем только свои .po файлы в каталоге проекта, игнорируя .venv
-	find ./locale -name "*.po" | while read po; do \
-		dir=$$(dirname $$po); \
-		msgfmt $$po -o $$dir/$$(basename $$po .po).mo || true; \
-	done
+	django-admin makemessages -l ru
