@@ -6,10 +6,10 @@
 <form action="{% url 'users:users_create' %}" method="post">
     <div class="row justify-content-center">
         <div class="col-sm-4">
-            <h1 class="my-4">{% trans 'Зарегистрироваться' %}</h1>
+            <h1 class="my-4">{% trans 'Зарегистрировать' %}</h1>
             {% csrf_token %}
             {% bootstrap_form form %}
-            <input class="btn btn-success" type="submit" value="{% trans 'Зарегистрироваться' context 'verb' %}">
+            <input class="btn btn-success" type="submit" value="{% trans 'Зарегистрировать' context 'verb' %}">
         </div>
     </div>
 </form>
