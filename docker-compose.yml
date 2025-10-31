@@ -4,6 +4,5 @@ services:
   app:
     build: .
     working_dir: /project
-    volumes:
-      - .:/project
     command: uv run pytest -vv tests
+
