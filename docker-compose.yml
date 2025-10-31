@@ -3,6 +3,6 @@ version: "3.9"
 services:
   app:
     build: .
-    working_dir: /project
+    working_dir: /project/code
     command: uv run pytest -vv tests
 
