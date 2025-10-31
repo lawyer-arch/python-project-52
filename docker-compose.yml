@@ -5,6 +5,20 @@ services:
     build: .
     working_dir: /project/code
     command: uv run pytest -vv tests
-    depends_on: 
+    depends_on:
       - webserver
+    networks:
+      - internal
+
+  webserver:
+    build: .
+    command: python manage.py runserver 0.0.0.0:9000
+    networks:
+      - internal
+
+  networks:
+    internal:
+      driver: bridge
+
+
 
