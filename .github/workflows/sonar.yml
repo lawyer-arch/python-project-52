@@ -31,7 +31,7 @@ jobs:
       - name: Install test tools
         run: pip install pytest pytest-cov pytest-django
 
-      # Задаём DJANGO_SETTINGS_MODULE и запускаем тесты
+      # Задаём DJANGO_SETTINGS_MODULE и запускаем тесты с coverage
       - name: Run tests
         run: |
           export DJANGO_SETTINGS_MODULE=task_manager.settings
@@ -48,5 +48,6 @@ jobs:
             -Dsonar.organization=lawyer-arch
             -Dsonar.sources=.
             -Dsonar.python.coverage.reportPaths=coverage.xml
+
 
 
