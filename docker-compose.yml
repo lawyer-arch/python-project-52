@@ -4,21 +4,26 @@ services:
   app:
     build: .
     working_dir: /project/code
-    command: uv run pytest -vv tests
+    command: tail -f /dev/null
     depends_on:
       - webserver
     networks:
-      - internal
+      - mynetwork
 
   webserver:
     build: .
     command: python manage.py runserver 0.0.0.0:9000
     networks:
-      - internal
+      - mynetwork
 
-  networks:
-    internal:
-      driver: bridge
+networks:
+  mynetwork:
+    external: true
+
+
+
+
+
 
 
 
