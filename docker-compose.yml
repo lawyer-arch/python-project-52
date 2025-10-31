@@ -1,23 +1,35 @@
-version: "3.9"
-
 services:
-  webserver:  # <--- изменено имя сервиса с server на webserver
+  webserver:
     build: .
     command: sh -c "python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:9000"
     working_dir: /project
     environment:
       - ALLOWED_HOSTS=webserver,127.0.0.1,localhost
     ports:
-      - "9000:9000"  # <--- чтобы можно было достучаться снаружи (опционально для локального теста)
+      - "9000:9000"
+    volumes:
+      - .:/project  # чтобы видеть изменения кода сразу
+    depends_on:
+      - db
 
   app:
     build: .
-    command: pytest -vv tests
+    command: uv run pytest -vv tests
     working_dir: /project
     environment:
       - ALLOWED_HOSTS=webserver,127.0.0.1,localhost
     depends_on:
       - webserver
+      - db
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: task_manager
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
 
 
 

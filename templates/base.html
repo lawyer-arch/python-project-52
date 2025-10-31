@@ -45,16 +45,16 @@
                                 <button type="submit" class="nav-link btn p-0">{% trans "Выход" %}</button>
                             </form>
                         </li>
-                    {% else %}
-                        <form action="{% url 'login' %}" method="post" class="d-inline">
-                            {% csrf_token %}
-                            <button type="submit" class="nav-link btn p-1">Войти</button>
-                        </form>
-                        <form action="{% url 'users:users_create' %}" method="post" class="d-inline">
-                            {% csrf_token %}
-                            <button type="submit" class="nav-link btn p-1">{% trans "Регистрация" %}</button>
-                        </form>
-                    {% endif %}
+                            {% if not user.is_authenticated %}
+                                <form action="{% url 'login' %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit">Вход</button>
+                                </form>
+                                <form action="{% url 'users:users_create' %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit">Регистрация</button>
+                                </form>
+                            {% endif %}
                 </ul>
             </div>
         </div>
