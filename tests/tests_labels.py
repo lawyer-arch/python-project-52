@@ -57,8 +57,6 @@ class TestLabelCRUD:
             follow=True
         )
         assert response.status_code == 200
-        label = Label.objects.get(name="Новая метка")
-
         messages = list(get_messages(response.wsgi_request))
         assert any("Метка успешно создана" in str(m) for m in messages)
 
@@ -90,15 +88,18 @@ class TestLabelCRUD:
 
         assert response.status_code == 200
         messages = list(get_messages(response.wsgi_request))
-    
+
         # Проверяем, что появилось предупреждение о невозможности удаления
-        assert any("невозможно удалить" in str(m) for m in messages)
-    
+        assert any(
+            "Невозможно удалить метку, потому что она используется в задачах"
+            in str(m) for m in messages
+        )
+
         # Метка не должна удаляться
         assert Label.objects.filter(pk=label.pk).exists()
 
-    
-    
+
+
     def test_detail_label(self, client_logged, label):
         url = reverse("labels:labels_detail", args=[label.pk])
         response = client_logged.get(url)

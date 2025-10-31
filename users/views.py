@@ -35,7 +35,7 @@ class PermissionMessageMixin:
         messages.error(self.request, self.permission_denied_message)
         return redirect(self.redirect_url)
 
-  
+
 class UserPermissionTestMixin(UserPassesTestMixin):
     """
     Проверяет, что пользователь изменяет или удаляет только свой профиль,

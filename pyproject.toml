@@ -37,10 +37,14 @@ package-dir = {"" = "."}
 package-data = { "task_manager" = ["templates/**/*"] }
 
 [tool.ruff]
+target-version = "py313" 
 line-length = 120
-select = ["E", "W", "F", "I"]
-ignore = ["I001"]
 exclude = ["*/migrations/*"]
+
+[tool.ruff.lint]
+ignore = ["I001"]
+select = ["E", "W", "F", "I"]
+
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "task_manager.settings"

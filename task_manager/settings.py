@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 import os
+import rollbar
 import dj_database_url
 from pathlib import Path
 from dotenv import load_dotenv
@@ -197,9 +198,6 @@ LOGGING = {
     },
 }
 
-
-import rollbar
-import rollbar.contrib.django.middleware as rollbar_middleware
 
 ROLLBAR = {
     'access_token': os.environ.get('ROLLBAR_ACCESS_TOKEN'),

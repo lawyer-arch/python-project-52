@@ -5,7 +5,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django_filters.views import FilterView
 
 from .models import Label
@@ -96,7 +96,7 @@ class LabelDeleteView(LoginRequiredMixin, DeleteView):
         # Проверяем, есть ли задачи с этой меткой
         if Task.objects.filter(labels=self.object).exists():
             messages.error(
-                request, 
+                request,
                 "Невозможно удалить метку, потому что она используется в задачах"
             )
             logger.warning(f"Попытка удалить метку {label_id}, связанную с задачами")
