@@ -19,5 +19,5 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 ENV PYTHONUNBUFFERED=1
 
 # Команда по умолчанию
-CMD ["python", "manage.py", "runserver", "0.0.0.0:9000"]
+CMD ["python", "manage.py", "webserver", "0.0.0.0:9000"]
 

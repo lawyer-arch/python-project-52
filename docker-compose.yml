@@ -1,7 +1,7 @@
 services:
   webserver:
     build: .
-    command: sh -c "python manage.py collectstatic --noinput && python manage.py runserver 0.0.0.0:9000"
+    command: sh -c "python manage.py collectstatic --noinput && python manage.py webserver 0.0.0.0:9000"
     working_dir: /project
     environment:
       - ALLOWED_HOSTS=webserver,127.0.0.1,localhost
