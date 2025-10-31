@@ -48,7 +48,7 @@
                     {% else %}
                         <form action="{% url 'login' %}" method="post" class="d-inline">
                             {% csrf_token %}
-                            <button type="submit" class="nav-link btn p-1" name="Вход">{% trans "Вход" %}</button>
+                            <button type="submit" class="nav-link btn p-1" name="Войти">{% trans "Вход" %}</button>
                         </form>
                         <form action="{% url 'users:users_create' %}" method="post" class="d-inline">
                             {% csrf_token %}
