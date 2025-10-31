@@ -39,22 +39,22 @@
 
                 <ul class="navbar-nav">
                     {% if user.is_authenticated %}
-                        <li class="nav-item">
-                            <form action="{% url 'logout' %}" method="post" class="d-inline">
-                                {% csrf_token %}
-                                <button type="submit" class="nav-link btn p-0">{% trans "Выход" %}</button>
-                            </form>
-                        </li>
-                            {% if not user.is_authenticated %}
-                                <form action="{% url 'login' %}" method="post" class="d-inline">
-                                    {% csrf_token %}
-                                    <button type="submit">Вход</button>
-                                </form>
-                                <form action="{% url 'users:users_create' %}" method="post" class="d-inline">
-                                    {% csrf_token %}
-                                    <button type="submit">Регистрация</button>
-                                </form>
-                            {% endif %}
+                    <li class="nav-item">
+                        <form action="{% url 'logout' %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link btn p-0">{% trans "Выход" %}</button>
+                        </form>
+                    </li>
+                    {% else %}  <!-- Если пользователь не авторизован -->
+                        <form action="{% url 'login' %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit">Вход</button>
+                        </form>
+                        <form action="{% url 'users:users_create' %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit">Регистрация</button>
+                        </form>
+                    {% endif %}
                 </ul>
             </div>
         </div>

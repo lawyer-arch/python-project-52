@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-31 15:23+0300\n"
+"POT-Creation-Date: 2025-10-31 20:35+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
 #: labels/models.py:6 statuses/models.py:6 tasks/models.py:8
 #: templates/labels/list.html:14 templates/statuses/list.html:14
 #: templates/tasks/detail.html:13 templates/tasks/list.html:72
@@ -31,8 +32,7 @@ msgstr "Tag created successfully"
 
 #: labels/views.py:76
 msgid "Метка успешно изменена"
-msgstr "
-Label changed successfully"
+msgstr "Label changed successfully"
 
 #: statuses/models.py:7 tasks/models.py:40 templates/labels/list.html:15
 #: templates/statuses/list.html:15 templates/tasks/detail.html:14
@@ -142,14 +142,6 @@ msgstr "Task`"
 msgid "Выход"
 msgstr "Exit"
 
-#: templates/base.html:51
-msgid "Войти"
-msgstr "Log up"
-
-#: templates/base.html:55
-msgid "Регистрация"
-msgstr "Registration"
-
 #: templates/index.html:13
 msgid "Узнать больше"
 msgstr "Find out more"
@@ -213,13 +205,15 @@ msgid "Обновить"
 msgstr "Update"
 
 #: templates/registration/login.html:10
-msgid "Вход"
-msgstr "Entrance"
+msgid "Войти"
+msgstr "Log up"
 
 #: templates/registration/login.html:14
+#, fuzzy
+#| msgid "Войти"
 msgctxt "verb"
-msgid "Вход"
-msgstr "Entrance"
+msgid "Войти"
+msgstr "Log up"
 
 #: templates/statuses/create.html:9 templates/statuses/list.html:8
 #: templates/tasks/detail.html:8
@@ -310,3 +304,13 @@ msgstr "Profile successfully updated!"
 #: users/views.py:91
 msgid "Пользователь успешно удален!"
 msgstr "The user has been successfully deleted!"
+
+#~ msgid "Регистрация"
+#~ msgstr "Registration"
+
+#~ msgid "Вход"
+#~ msgstr "Entrance"
+
+#~ msgctxt "verb"
+#~ msgid "Вход"
+#~ msgstr "Entrance"

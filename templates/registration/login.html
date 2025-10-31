@@ -7,11 +7,11 @@
     <div class="row justify-content-center">
         <div class="col-sm-4">
             <h1 class="my-4">
-                {% trans 'Вход' %}
+                {% trans 'Войти' %}
             </h1>
             {% csrf_token %}
             {% bootstrap_form form %}
-            <input class="btn btn-primary" type="submit" value="{% trans 'Вход' context 'verb' %}">
+            <input class="btn btn-primary" type="submit" value="{% trans 'Войти' context 'verb' %}">
         </div>
     </div>
 </form>
