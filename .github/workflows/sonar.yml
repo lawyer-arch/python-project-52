@@ -40,8 +40,13 @@ jobs:
       # Запуск анализа SonarCloud
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@v2
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          projectKey: lawyer-arch_python-project-52
-          organization: lawyer-arch
-          token: ${{ secrets.SONAR_TOKEN }}
+          args: >
+            -Dsonar.projectKey=lawyer-arch_python-project-52
+            -Dsonar.organization=lawyer-arch
+            -Dsonar.sources=.
+            -Dsonar.python.coverage.reportPaths=coverage.xml
+
 
