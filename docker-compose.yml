@@ -5,4 +5,6 @@ services:
     build: .
     working_dir: /project/code
     command: uv run pytest -vv tests
+    depends_on: 
+      - webserver
 
