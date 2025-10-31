@@ -46,12 +46,14 @@
                             </form>
                         </li>
                     {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}">{% trans "Вход" %}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'users:users_create' %}">{% trans "Регистрация" %}</a>
-                        </li>
+                        <form action="{% url 'login' %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link btn p-1">{% trans "Войти" %}</button>
+                        </form>
+                        <form action="{% url 'users:users_create' %}" method="post" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link btn p-1">{% trans "Регистрация" %}</button>
+                        </form>
                     {% endif %}
                 </ul>
             </div>
