@@ -1,36 +1,24 @@
-# Используем официальный Python 3.13
-FROM python:3.13-slim
+FROM python:3.13
 
-# Системные зависимости для Playwright и браузера
-RUN apt-get update && apt-get install -y \
-    curl wget gnupg libnss3 libatk1.0-0 libatk-bridge2.0-0 \
-    libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 \
-    libxrandr2 libgbm1 libgtk-3-0 && \
-    rm -rf /var/lib/apt/lists/*
-
-# Рабочая директория
 WORKDIR /project
 
-# Копируем проект
+# Копируем pyproject.toml (и poetry.lock, если вдруг есть) для кеша слоёв
+COPY pyproject.toml poetry.lock* ./
+
+# Обновляем pip и устанавливаем зависимости через pyproject.toml
+RUN python -m pip install --upgrade pip
+RUN pip install build
+RUN pip install .
+
+# Копируем весь проект
 COPY . .
 
-# Создаем виртуальное окружение uv
-RUN python -m venv .venv
-ENV PATH="/project/.venv/bin:$PATH"
+# Активируем venv по умолчанию
+ENV VIRTUAL_ENV=/project/.venv
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-# Устанавливаем uv и зависимости из pyproject.toml
-RUN pip install --upgrade pip
-RUN pip install uv
-RUN uv install --no-dev
+# Переменные Python
+ENV PYTHONUNBUFFERED=1
 
-# Устанавливаем зависимости для разработки и тестов
-RUN uv install --dev
-
-# Устанавливаем браузеры для Playwright
-RUN python -m playwright install
-
-# Команда по умолчанию для Hexlet
-CMD ["uv", "run", "pytest", "-vv", "tests"]
-
-
-
+# Команда по умолчанию
+CMD ["python", "manage.py", "runserver", "0.0.0.0:9000"]

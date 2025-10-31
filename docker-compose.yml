@@ -5,6 +5,9 @@ services:
     build: .
     command: pytest -vv tests
     working_dir: /project
+    environment:
+      - ALLOWED_HOSTS=webserver,127.0.0.1,localhost
+
 
 
 
