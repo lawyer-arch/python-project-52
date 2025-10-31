@@ -1,23 +1,36 @@
-# Dockerfile
+# Используем официальный Python 3.13
 FROM python:3.13-slim
 
-WORKDIR /project
+# Системные зависимости для Playwright и браузера
+RUN apt-get update && apt-get install -y \
+    curl wget gnupg libnss3 libatk1.0-0 libatk-bridge2.0-0 \
+    libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 \
+    libxrandr2 libgbm1 libgtk-3-0 && \
+    rm -rf /var/lib/apt/lists/*
 
-# Системные зависимости
-RUN apt-get update && apt-get install -y build-essential libpq-dev
-
-# Устанавливаем uv
-RUN pip install uv
+# Рабочая директория
+WORKDIR /project/code
 
 # Копируем проект
 COPY . .
 
-# Устанавливаем все зависимости, включая dev
-RUN uv pip install -e . --system --group dev
+# Создаем виртуальное окружение uv
+RUN python -m venv .venv
+ENV PATH="/project/code/.venv/bin:$PATH"
 
-# Открываем порт Django
-EXPOSE 3000
+# Устанавливаем uv и зависимости из pyproject.toml
+RUN pip install --upgrade pip
+RUN pip install uv
+RUN uv install --no-dev  # Для продакшн/hexlet можно без dev-зависимостей
 
-# Команда по умолчанию — можно оставить pytest для CI
+# Устанавливаем зависимости для разработки и тестов
+RUN uv install --dev
+
+# Устанавливаем браузеры для Playwright
+RUN python -m playwright install
+
+# Команда по умолчанию для Hexlet
 CMD ["uv", "run", "pytest", "-vv", "tests"]
+
+
 
