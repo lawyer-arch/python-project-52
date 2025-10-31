@@ -48,6 +48,3 @@ jobs:
             -Dsonar.organization=lawyer-arch
             -Dsonar.sources=.
             -Dsonar.python.coverage.reportPaths=coverage.xml
-
-
-
