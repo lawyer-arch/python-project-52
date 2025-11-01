@@ -19,7 +19,7 @@ class RegisterForm(UserCreationForm):
 class CustomUserChangeForm(forms.ModelForm):
     # Дублируем поля паролей вручную
     password1 = forms.CharField(
-        label="Новый пароль",
+        label="Пароль",
         required=False,  # Пароль необязателен
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'})
     )
@@ -27,7 +27,7 @@ class CustomUserChangeForm(forms.ModelForm):
         label="Подтверждение пароля",
         required=False,  # Подтверждение тоже необязательно
         widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
-        help_text="Введите тот же пароль ещё раз."
+        help_text="Для подтверждения введите, пожалуйста, пароль ещё раз."
     )
 
     class Meta:
