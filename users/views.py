@@ -7,6 +7,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
+from django.http import HttpResponseBadRequest
 
 from .forms import RegisterForm, CustomUserChangeForm
 
@@ -62,23 +63,30 @@ class UsersCreateView(FormLoggerMixin, SuccessMessageMixin, CreateView):
 
     # код отладки после удалить
     def dispatch(self, request, *args, **kwargs):
-        print("CSRF-кука в запросе:", request.COOKIES.get("csrftoken"))
+        print("=== Dispatch ===")
+        print("CSRF-кука:", request.COOKIES.get("csrftoken"))
         print("CSRF-токен в POST:", request.POST.get("csrfmiddlewaretoken"))
         return super().dispatch(request, *args, **kwargs)
 
 
-    
     def form_valid(self, form):
-        print("Форма валидна, сохраняем объект")  # Отладка
+        print("=== form_valid ===")
+        try:
+            user = form.save()
+            print("Пользователь сохранён:", user.pk, user.username)
+        except Exception as e:
+            print("Ошибка сохранения:", e)
+            return HttpResponseBadRequest("Ошибка сохранения")
+        
         response = super().form_valid(form)
         print("Перенаправление на:", self.get_success_url())
-        print("CSRF-токен в запросе:", self.request.COOKIES.get('csrftoken'))
-        print("Перенаправление на:", self.get_success_url())
+        print("Статус ответа:", response.status_code)
         return response
 
     def form_invalid(self, form):
-        print("Форма невалидна. Ошибки:", form.errors)  # Отладка
-        print("Данные:", form.data)
+        print("=== form_invalid ===")
+        print("Ошибки формы:", form.errors)
+        print("POST-данные:", self.request.POST)
         return super().form_invalid(form)
 
 
