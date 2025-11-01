@@ -54,12 +54,11 @@ class CustomUserChangeForm(forms.ModelForm):
 
         # Сохранять username, если не указана новая версия
         new_username = self.cleaned_data.get('username')
-        if not new_username or new_username.strip() == "":
+        if not new_username.strip():  # Достаточно одной проверки на пустоту
             user.username = self.instance.username  # Восстанавливаем старое значение
         else:
-            user.username = new_username  # Иначе применяем новое значение
+            user.username = new_username  # Применяем новое значение
 
         if commit:
             user.save()
         return user
-
