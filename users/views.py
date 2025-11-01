@@ -61,6 +61,13 @@ class UsersCreateView(FormLoggerMixin, SuccessMessageMixin, CreateView):
     log_message = "Создать пользователя: {obj.username}"
 
     # код отладки после удалить
+    def dispatch(self, request, *args, **kwargs):
+        print("CSRF-кука в запросе:", request.COOKIES.get("csrftoken"))
+        print("CSRF-токен в POST:", request.POST.get("csrfmiddlewaretoken"))
+        return super().dispatch(request, *args, **kwargs)
+
+
+    
     def form_valid(self, form):
         print("Форма валидна, сохраняем объект")  # Отладка
         response = super().form_valid(form)

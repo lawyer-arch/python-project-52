@@ -194,3 +194,9 @@ ROLLBAR = {
 }
 
 rollbar.init(**ROLLBAR)
+
+
+# для отладки login
+CSRF_COOKIE_SECURE = False  # Для разработки (если нет HTTPS)
+CSRF_COOKIE_HTTPONLY = False  # Чтобы JS мог читать токен (не обязательно)
+CSRF_TRUSTED_ORIGINS = ["http://webserver:9000"]  # Если есть CORS
