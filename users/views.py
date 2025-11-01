@@ -63,24 +63,24 @@ class UsersCreateView(FormLoggerMixin, SuccessMessageMixin, CreateView):
 
     # код отладки после удалить
     def dispatch(self, request, *args, **kwargs):
-        print("=== Dispatch ===")
-        print("CSRF-кука:", request.COOKIES.get("csrftoken"))
-        print("CSRF-токен в POST:", request.POST.get("csrfmiddlewaretoken"))
+        # Проверяем CSRF на уровне запроса
+        if not self.request.POST.get("csrfmiddlewaretoken"):
+            print("CSRF-токен отсутствует в POST!")
+            return HttpResponseBadRequest("CSRF token missing")
         return super().dispatch(request, *args, **kwargs)
 
-
     def form_valid(self, form):
-        print("=== form_valid ===")
+        print("=== form_valid: Начало ===")
         try:
             user = form.save()
-            print("Пользователь сохранён:", user.pk, user.username)
+            print(f"Пользователь сохранён: {user.pk} {user.username}")
         except Exception as e:
-            print("Ошибка сохранения:", e)
-            return HttpResponseBadRequest("Ошибка сохранения")
-        
+            print(f"Ошибка сохранения: {e}")
+            return HttpResponseBadRequest(f"Ошибка сохранения: {e}")
+
         response = super().form_valid(form)
-        print("Перенаправление на:", self.get_success_url())
-        print("Статус ответа:", response.status_code)
+        print(f"Перенаправление на: {self.get_success_url()}")
+        print(f"Статус ответа: {response.status_code}")
         return response
 
     def form_invalid(self, form):
