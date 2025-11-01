@@ -61,39 +61,6 @@ class UsersCreateView(FormLoggerMixin, SuccessMessageMixin, CreateView):
     success_message = _("Пользователь успешно зарегистрирован!")
     log_message = "Создать пользователя: {obj.username}"
 
-    # код отладки после удалить
-    def dispatch(self, request, *args, **kwargs):
-        if not self.request.POST.get("csrfmiddlewaretoken"):
-        # Отключаем проверку CSRF только для тестов
-            import sys
-            if 'pytest' in sys.modules:
-                pass  # не возвращаем BadRequest
-            else:
-                print("CSRF-токен отсутствует в POST!")
-                return HttpResponseBadRequest("CSRF token missing")
-        return super().dispatch(request, *args, **kwargs)
-    
-    
-    def form_valid(self, form):
-        print("=== form_valid: Начало ===")
-        try:
-            user = form.save()
-            print(f"Пользователь сохранён: {user.pk} {user.username}")
-        except Exception as e:
-            print(f"Ошибка сохранения: {e}")
-            return HttpResponseBadRequest(f"Ошибка сохранения: {e}")
-
-        response = super().form_valid(form)
-        print(f"Перенаправление на: {self.get_success_url()}")
-        print(f"Статус ответа: {response.status_code}")
-        return response
-
-    def form_invalid(self, form):
-        print("=== form_invalid ===")
-        print("Ошибки формы:", form.errors)
-        print("POST-данные:", self.request.POST)
-        return super().form_invalid(form)
-
 
 class UsersUpdateView(
     PermissionMessageMixin,
