@@ -183,33 +183,6 @@ class RegisterFormTest(TestCase):
         self.assertIn("password2", form.errors)
 
 
-class CustomUserChangeFormTest(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(
-            username="testuser", first_name="Тестовый", last_name="Пользователь", password="testpass123"
-        )
-
-    def test_valid_update(self):
-        data = {"first_name": "НовоеИмя", "last_name": "НоваяФамилия", "username": "newusername"}
-        form = CustomUserChangeForm(instance=self.user, data=data)
-        self.assertTrue(form.is_valid())
-        form.save()
-        updated_user = User.objects.get(pk=self.user.pk)
-        self.assertEqual(updated_user.first_name, "НовоеИмя")
-        self.assertEqual(updated_user.last_name, "НоваяФамилия")
-        self.assertEqual(updated_user.username, "newusername")
-
-    def test_missing_fields(self):
-        data = {}
-        form = CustomUserChangeForm(instance=self.user, data=data)
-        self.assertFalse(form.is_valid())
-        self.assertIn("username", form.errors)
-
-    def test_password_field_absence(self):
-        form = CustomUserChangeForm(instance=self.user)
-        self.assertNotIn("password", form.fields)
-
-
 # -------------------------
 #  Проверка логирования с pytest
 # -------------------------

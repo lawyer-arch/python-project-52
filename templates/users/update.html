@@ -6,10 +6,10 @@
 <form action="{% url 'users:users_update' user.id %}" method="post">
     <div class="row justify-content-center">
         <div class="col-sm-4">
-            <h1 class="my-4">{% trans "Обновить пользователя" %}</h1>
+            <h1 class="my-4">{% trans "Изменение пользователя" %}</h1>
             {% csrf_token %}
             {% bootstrap_form form %}
-            <input class="btn btn-primary" type="submit" value="{% trans 'Обновить' context 'verb' %}">
+            <input class="btn btn-primary" type="submit" value="{% trans 'Изменить' context 'verb' %}">
             <a href="{% url 'users:users_list' %}" class="btn btn-secondary">{% trans 'Отмена' %}</a>
         </div>
     </div>
