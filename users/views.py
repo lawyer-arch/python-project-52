@@ -7,9 +7,9 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
-from django.http import HttpResponseBadRequest
 
 from .forms import RegisterForm, CustomUserChangeForm
+from tasks.models import Task
 
 logger = logging.getLogger("users")
 
@@ -91,3 +91,25 @@ class UsersDeleteView(
     success_url = reverse_lazy("users:users_list")
     success_message = _("Пользователь успешно удален")
     log_message = "Пользователь удален: {obj.username}"
+
+    def post(self, request, *args, **kwargs):
+        """
+        Переопределяем POST, чтобы перед удалением проверить связанные задачи.
+        """
+        self.object = self.get_object()  # объект берётся по pk из URL
+        user_id = self.object.id
+
+        # Проверяем, есть ли задачи, автором которых является пользователь
+        if Task.objects.filter(author=self.object).exists():
+            messages.error(
+                request,
+                _("Невозможно удалить пользователя, потому что он используется")
+            )
+            logger.warning(f"Попытка удалить пользователя {user_id}, который является автором задач")
+            return redirect(self.success_url)
+
+        # Если связей нет — вызываем стандартное удаление
+        response = super().post(request, *args, **kwargs)
+        messages.success(request, _("Пользователь успешно удалён"))
+        logger.info(f"Пользователь {user_id} удалён")
+        return response

@@ -109,7 +109,7 @@ class UsersViewsTest(TestCase):
         # 3. Проверка сообщения об успехе
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]), "Пользователь успешно зарегистрирован!")
+        self.assertEqual(str(messages[0]), "Пользователь успешно зарегистрирован")
         # 4. Проверка авторизации
         user = User.objects.get(username="newuser")
         self.assertIsNotNone(user)
