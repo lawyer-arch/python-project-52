@@ -17,16 +17,17 @@ class RegisterForm(UserCreationForm):
 
 
 class CustomUserChangeForm(forms.ModelForm):
-    # Поля паролей вручную
+    # Дублируем поля паролей вручную
     password1 = forms.CharField(
         label="Пароль",
         required=False,
-        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'})
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
+        help_text="Ваш пароль должен содержать как минимум 3 символа."
     )
     password2 = forms.CharField(
         label="Подтверждение пароля",
         required=False,
-        widget=forms.PasswordInput(attrs={'autocomplete': 'new-password'}),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password"}),
         help_text="Для подтверждения введите, пожалуйста, пароль ещё раз."
     )
 
@@ -39,6 +40,7 @@ class CustomUserChangeForm(forms.ModelForm):
         self.fields['username'].required = False
 
     def clean_password2(self):
+        """Проверка совпадения паролей"""
         password1 = self.cleaned_data.get('password1')
         password2 = self.cleaned_data.get('password2')
         if password1 or password2:
@@ -46,19 +48,19 @@ class CustomUserChangeForm(forms.ModelForm):
                 raise ValidationError("Пароли не совпадают.")
         return password2
 
+    def clean_username(self):
+        """Проверяем уникальность выбранного имени пользователя"""
+        username = self.cleaned_data.get('username')
+        if not username:
+            username = self.instance.username
+        if User.objects.exclude(pk=self.instance.pk).filter(username=username).exists():
+            raise ValidationError("Пользователь с таким именем уже существует.")
+        return username
+
     def save(self, commit=True):
         user = super().save(commit=False)
-        # Установка пароля, если задан новый
         if self.cleaned_data.get('password1'):
             user.set_password(self.cleaned_data['password1'])
-
-        # Сохранять username, если не указана новая версия
-        new_username = self.cleaned_data.get('username')
-        if not new_username.strip():  # Достаточно одной проверки на пустоту
-            user.username = self.instance.username  # Восстанавливаем старое значение
-        else:
-            user.username = new_username  # Применяем новое значение
-
         if commit:
             user.save()
         return user

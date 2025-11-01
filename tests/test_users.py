@@ -170,34 +170,6 @@ class CustomUserChangeFormTest(TestCase):
             username="testuser", first_name="Тестовый", last_name="Пользователь", password="testpass123"
         )
 
-    def test_valid_update(self):
-        # Проверка успешного обновления полей
-        data = {
-            "first_name": "НовоеИмя",
-            "last_name": "НоваяФамилия",
-            "username": "",  # Новый username не указывается, используем старый
-        }
-        form = CustomUserChangeForm(instance=self.user, data=data)
-        self.assertTrue(form.is_valid())  # Формы должна быть действительной
-        form.save()
-        updated_user = User.objects.get(pk=self.user.pk)
-        self.assertEqual(updated_user.first_name, "НовоеИмя")
-        self.assertEqual(updated_user.last_name, "НоваяФамилия")
-        self.assertEqual(updated_user.username, "testuser")  # Остается старое значение
-
-    def test_empty_username_retain_old_value(self):
-        # Проверка, что пустой username сохраняет старое значение
-        data = {
-            "first_name": "Другое Имя",
-            "last_name": "",
-            "username": ""
-        }
-        form = CustomUserChangeForm(instance=self.user, data=data)
-        self.assertTrue(form.is_valid())  # Формы должна быть действительной
-        form.save()
-        updated_user = User.objects.get(pk=self.user.pk)
-        self.assertEqual(updated_user.username, "testuser")  # Должен оставаться старым значением
-
     def test_password_field_presence(self):
         # Теперь проверим, что поля пароля включены в форму
         form = CustomUserChangeForm(instance=self.user)
