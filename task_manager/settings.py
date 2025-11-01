@@ -31,15 +31,6 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "True").lower() == "true"
 
-if 'pytest' in sys.modules:
-    # Django запущен внутри pytest — отключаем CSRF-проверку
-    MIDDLEWARE = [
-        mw for mw in MIDDLEWARE
-        if mw != 'django.middleware.csrf.CsrfViewMiddleware'
-    ]
-
-
-
 # ALLOWED_HOSTS для задания
 ALLOWED_HOSTS = [
     host.strip().lower()
@@ -87,6 +78,13 @@ MIDDLEWARE = [
     'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
 ]
 
+# для отладки при тестирвоании в продакшене не нужен
+if 'pytest' in sys.modules:
+    # Django запущен внутри pytest — отключаем CSRF-проверку
+    MIDDLEWARE = [
+        mw for mw in MIDDLEWARE
+        if mw != 'django.middleware.csrf.CsrfViewMiddleware'
+    ]
 
 ROOT_URLCONF = "task_manager.urls"
 
