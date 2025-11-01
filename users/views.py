@@ -65,6 +65,8 @@ class UsersCreateView(FormLoggerMixin, SuccessMessageMixin, CreateView):
         print("Форма валидна, сохраняем объект")  # Отладка
         response = super().form_valid(form)
         print("Перенаправление на:", self.get_success_url())
+        print("CSRF-токен в запросе:", self.request.COOKIES.get('csrftoken'))
+        print("Перенаправление на:", self.get_success_url())
         return response
 
     def form_invalid(self, form):
