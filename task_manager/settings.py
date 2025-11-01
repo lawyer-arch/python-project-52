@@ -131,8 +131,20 @@ USE_I18N = True
 
 USE_TZ = True
 
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.2/howto/static-files/
+
+# Установите корневую директорию для статических файлов
+STATIC_URL = '/static/'
+
 # Директория, где собираются статические файлы
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Пути к директориям с вашими собственными статическими файлами
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -143,6 +155,7 @@ DJANGO_BOOTSTRAP5 = {
     "css_url": "https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css",
     "javascript_url": "https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.bundle.min.js",
 }
+
 
 ROLLBAR = {
     'access_token': os.environ.get('ROLLBAR_ACCESS_TOKEN'),
