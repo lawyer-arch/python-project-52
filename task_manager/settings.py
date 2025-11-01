@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 import os
+import sys
 import rollbar
 import dj_database_url
 from pathlib import Path
@@ -29,6 +30,15 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "True").lower() == "true"
+
+if 'pytest' in sys.modules:
+    # Django запущен внутри pytest — отключаем CSRF-проверку
+    MIDDLEWARE = [
+        mw for mw in MIDDLEWARE
+        if mw != 'django.middleware.csrf.CsrfViewMiddleware'
+    ]
+
+
 
 # ALLOWED_HOSTS для задания
 ALLOWED_HOSTS = [
@@ -195,8 +205,3 @@ ROLLBAR = {
 
 rollbar.init(**ROLLBAR)
 
-
-# для отладки login
-CSRF_COOKIE_SECURE = False  # Для разработки (если нет HTTPS)
-CSRF_COOKIE_HTTPONLY = False  # Чтобы JS мог читать токен (не обязательно)
-CSRF_TRUSTED_ORIGINS = ["http://webserver:9000"]  # Если есть CORS
