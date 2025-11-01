@@ -183,6 +183,44 @@ class RegisterFormTest(TestCase):
         self.assertIn("password2", form.errors)
 
 
+class CustomUserChangeFormTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="testuser", first_name="Тестовый", last_name="Пользователь", password="testpass123"
+        )
+
+    def test_valid_update(self):
+        # Проверка успешного обновления полей
+        data = {
+            "first_name": "НовоеИмя",
+            "last_name": "НоваяФамилия",
+            "username": ""  # Новый username не указывается, используем старый
+        }
+        form = CustomUserChangeForm(instance=self.user, data=data)
+        self.assertTrue(form.is_valid())  # Формы должна быть действительной
+        form.save()
+        updated_user = User.objects.get(pk=self.user.pk)
+        self.assertEqual(updated_user.first_name, "НовоеИмя")
+        self.assertEqual(updated_user.last_name, "НоваяФамилия")
+        self.assertEqual(updated_user.username, "testuser")  # Должен остаться старым значением
+
+    def test_missing_fields(self):
+        # Теперь username не обязательное поле, поэтому проверяем обязательность других полей
+        data = {}  # Ничего не передаётся
+        form = CustomUserChangeForm(instance=self.user, data=data)
+        self.assertFalse(form.is_valid())  # Формы должна быть недействительной
+        # Проверяем, что обязательное поле first_name вызвало ошибку
+        self.assertIn("first_name", form.errors)
+        self.assertIn("last_name", form.errors)  # Также проверяем last_name
+
+    def test_password_field_absence(self):
+        # Нет поля пароля в базовой форме (оно добавляется динамически)
+        form = CustomUserChangeForm(instance=self.user)
+        self.assertNotIn("password", form.fields.keys())  # Поле пароля должно отсутствовать
+        self.assertNotIn("password1", form.fields.keys())  # Дополнительные поля пароля также отсутствуют
+        self.assertNotIn("password2", form.fields.keys())
+
+
 # -------------------------
 #  Проверка логирования с pytest
 # -------------------------
