@@ -58,7 +58,7 @@ class UsersCreateView(FormLoggerMixin, SuccessMessageMixin, CreateView):
     form_class = RegisterForm
     template_name = "users/create.html"
     success_url = "/login/"
-    success_message = _("Пользователь успешно зарегистрирован!")
+    success_message = _("Пользователь успешно зарегистрирован")
     log_message = "Создать пользователя: {obj.username}"
 
 
@@ -74,7 +74,7 @@ class UsersUpdateView(
     form_class = CustomUserChangeForm
     template_name = "users/update.html"
     success_url = reverse_lazy("users:users_list")
-    success_message = _("Профиль успешно обновлен!")
+    success_message = _("Пользователь успешно изменен")
     log_message = "Пользователь обновлен: {obj.username}"
 
 
@@ -89,5 +89,5 @@ class UsersDeleteView(
     model = User
     template_name = "users/delete.html"
     success_url = reverse_lazy("users:users_list")
-    success_message = _("Пользователь успешно удален!")
+    success_message = _("Пользователь успешно удален")
     log_message = "Пользователь удален: {obj.username}"
