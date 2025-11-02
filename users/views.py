@@ -89,8 +89,6 @@ class UsersDeleteView(
     model = User
     template_name = "users/delete.html"
     success_url = reverse_lazy("users:users_list")
-    success_message = _("Пользователь успешно удален")
-    log_message = "Пользователь удален: {obj.username}"
 
     def post(self, request, *args, **kwargs):
         """
@@ -106,7 +104,7 @@ class UsersDeleteView(
                 _("Невозможно удалить пользователя, потому что он используется")
             )
             logger.warning(f"Попытка удалить пользователя {user_id}, который является автором задач")
-            return redirect(self.success_url)
+            return redirect("users:users_list")
 
         # Если связей нет — вызываем стандартное удаление
         response = super().post(request, *args, **kwargs)
