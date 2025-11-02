@@ -15,6 +15,7 @@ services:
       DJANGO_SETTINGS_MODULE: task_manager.settings
       ALLOWED_HOSTS: "webserver,localhost,127.0.0.1"
       PYTHONUNBUFFERED: 1
+      DATABASE_URL: "postgres://postgres:postgres@db:5432/task_manager"
     depends_on:
       - db
 
