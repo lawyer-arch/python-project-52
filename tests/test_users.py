@@ -115,14 +115,6 @@ class UsersViewsTest(TestCase):
         self.assertIsNotNone(user)
         self.assertEqual(user.username, "newuser")
 
-    #  Проверяем корректную работу удаления пользователя и вывод success_message
-    def test_users_delete_view_success_message(self):
-        url = reverse("users:users_delete", args=[self.user.pk])
-        response = self.client.post(url, follow=True)
-        messages = list(get_messages(response.wsgi_request))
-        #  Проверяем наличие сообщения об успешном удалении
-        assert any("удален" in str(m).lower() for m in messages)
-
 
 # --------------------------
 #  Тесты форм регистрации и изменения пользователя

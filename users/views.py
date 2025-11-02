@@ -107,7 +107,7 @@ class UsersDeleteView(
             return redirect("users:users_list")
 
         # Если связей нет — вызываем стандартное удаление
-        response = super().post(request, *args, **kwargs)
+        response = super().delete(request, *args, **kwargs)
         messages.success(request, _("Пользователь успешно удалён"))
         logger.info(f"Пользователь {user_id} удалён")
         return response
