@@ -21,7 +21,7 @@ services:
 
   webserver:
     build: .
-    command: sh -c "python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:9000"
+    command: bash -c "python manage.py migrate --noinput && python manage.py webserver 0.0.0.0:9000"
     environment:
       DJANGO_SETTINGS_MODULE: task_manager.settings
       ALLOWED_HOSTS: "*"
@@ -30,6 +30,7 @@ services:
       - "9000:9000"
     depends_on:
       - db
+
     
     volumes:
       - .:/project
