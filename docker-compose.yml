@@ -1,27 +1,4 @@
 services:
-  webserver:
-    build: .
-    command: sh -c "python manage.py collectstatic --noinput && python manage.py webserver 0.0.0.0:9000"
-    working_dir: /project
-    environment:
-      - ALLOWED_HOSTS=webserver,127.0.0.1,localhost
-    ports:
-      - "9000:9000"
-    volumes:
-      - .:/project  # чтобы видеть изменения кода сразу
-    depends_on:
-      - db
-
-  app:
-    build: .
-    command: uv run pytest -vv tests
-    working_dir: /project
-    environment:
-      - ALLOWED_HOSTS=webserver,127.0.0.1,localhost
-    depends_on:
-      - webserver
-      - db
-
   db:
     image: postgres:15
     environment:
@@ -30,6 +7,32 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
+
+  app:
+    build: .
+    command: sh -c "python manage.py migrate --noinput && python -m pytest -vv"
+    environment:
+      DJANGO_SETTINGS_MODULE: task_manager.settings
+      ALLOWED_HOSTS: "webserver,localhost,127.0.0.1"
+      PYTHONUNBUFFERED: 1
+    depends_on:
+      - db
+
+  webserver:
+    build: .
+    command: sh -c "python manage.py migrate --noinput && python manage.py runserver 0.0.0.0:9000"
+    environment:
+      DJANGO_SETTINGS_MODULE: task_manager.settings
+      ALLOWED_HOSTS: "*"
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "9000:9000"
+    depends_on:
+      - db
+    
+    volumes:
+      - .:/project
+
 
 
 

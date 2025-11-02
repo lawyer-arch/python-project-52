@@ -7,6 +7,8 @@ COPY pyproject.toml poetry.lock* ./
 
 # Обновляем pip и устанавливаем зависимости
 RUN python -m pip install --upgrade pip
+RUN pip install pytest pytest-django
+RUN pip install pytest
 RUN pip install build
 RUN pip install .
 

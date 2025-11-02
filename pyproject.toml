@@ -50,7 +50,7 @@ select = ["E", "W", "F", "I"]
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "task_manager.settings"
-python_files = "tests/*.py"
+python_files = ["tests.py", "test_*.py", "*_tests.py"]
 
 [dependency-groups]
 dev = [

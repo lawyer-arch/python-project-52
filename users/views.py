@@ -1,7 +1,7 @@
 import logging
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -107,8 +107,7 @@ class UsersDeleteView(
             return redirect("users:users_list")
 
         # Если связей нет — вызываем стандартное удаление
-        obj = get_object_or_404(User, pk=user_id)
-        obj.delete()
+        response = super().delete(request, *args, **kwargs)
         messages.success(request, _("Пользователь успешно удалён"))
         logger.info(f"Пользователь {user_id} удалён")
-        return redirect(self.success_url)
+        return response
