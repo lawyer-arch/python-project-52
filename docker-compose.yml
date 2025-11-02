@@ -34,16 +34,3 @@ services:
     
     volumes:
       - .:/project
-
-
-
-
-
-
-
-
-
-
-
-
-
