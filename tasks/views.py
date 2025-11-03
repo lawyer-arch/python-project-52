@@ -103,7 +103,7 @@ class TaskDeleteView(UserPassesTestMixin, LoginRequiredMixin, SuccessMessageMixi
         return obj.author == self.request.user
 
     def handle_no_permission(self):
-        messages.error(self.request, _("Невозможно удалить задачу — вы не являетесь её автором"))
+        messages.error(self.request, _("Невозможно удалить задачу — вы не являетесь ее автором"))
         return redirect('tasks:tasks_list')
 
     def delete(self, request, *args, **kwargs):
