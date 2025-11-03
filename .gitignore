@@ -28,7 +28,6 @@ eggs/
 parts/
 var/
 wheels/
-**/migrations/
 
 # Файлы разработки
 .DS_Store
