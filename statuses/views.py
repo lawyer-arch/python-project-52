@@ -56,7 +56,7 @@ class StatusUpdateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin,
     form_class = StatusForm  # Обязательный параметр для UpdateView
     template_name = "statuses/update.html"
     success_url = reverse_lazy("statuses:statuses_list")  # Редирект на список после обновления
-    success_message = _("Статус успешно изменён!")
+    success_message = _("Статус успешно изменён")
     log_message = "Статус обновлён: {obj}"
 
 
@@ -85,7 +85,7 @@ class StatusDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
             # Удаляем объект вручную
             self.object.delete()
             logger.info(f"Статус удалён: {self.object}")
-            messages.success(request, _("Статус успешно удалён!"))
+            messages.success(request, _("Статус успешно удалён"))
         except ObjectDoesNotExist:
             # Объект уже удалён кем-то другим
             messages.warning(request, _("Объект уже удалён."))

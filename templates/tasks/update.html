@@ -9,8 +9,7 @@
             <h1 class="my-4">{% trans "Изменить задачу" %}</h1>
             {% csrf_token %}
             {% bootstrap_form form %}
-            <input class="btn btn-primary" type="submit" value="{% trans 'Обновить' context 'verb' %}">
-            <a href="{% url 'tasks:tasks_list' %}" class="btn btn-secondary">{% trans 'Отмена' %}</a>
+            <input class="btn btn-primary" type="submit" value="{% trans 'Изменить' context 'verb' %}">
         </div>
     </div>
 </form>
