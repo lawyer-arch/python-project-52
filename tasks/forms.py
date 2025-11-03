@@ -8,10 +8,9 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['name', 'description', 'status', 'executor', 'labels']
-        widgets = {
-            'status': forms.Select(attrs={'class': 'form-select'}),
-            'executor': forms.Select(attrs={'class': 'form-select'}),
-            'labels': forms.SelectMultiple(attrs={'class': 'form-select'}),
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'class': 'form-control'}),
-        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['executor'].queryset = User.objects.all()
+        self.fields['status'].queryset = Status.objects.all()
+        self.fields['labels'].queryset = Label.objects.all()
