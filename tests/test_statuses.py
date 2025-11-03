@@ -54,7 +54,7 @@ class TestStatusCRUD:
 
         #  Проверка сообщения после обновления
         messages = list(get_messages(response.wsgi_request))
-        assert any("Статус успешно изменён" in str(m) for m in messages)
+        assert any("Статус успешно изменен" in str(m) for m in messages)
 
     #  Проверяет удаление статуса и вывод success_message.
     def test_delete_status(self, client_logged):

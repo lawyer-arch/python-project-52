@@ -68,7 +68,7 @@ class StatusDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Status
     template_name = "statuses/delete.html"
     success_url = reverse_lazy("statuses:statuses_list")
-    success_message = _("Статус успешно удалён")
+    success_message = _("Статус успешно удален")
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -84,5 +84,5 @@ class StatusDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
 
         response = super().delete(request, *args, **kwargs)
         messages.success(request, self.success_message)
-        logger.info(f"Статус {status_id} удалён")
+        logger.info(f"Статус {status_id} удален")
         return response
