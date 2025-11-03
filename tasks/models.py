@@ -21,7 +21,7 @@ class Task(models.Model):
         null=True,
         blank=True,
         verbose_name=_("Исполнитель"),
-        related_name='Исполнитель'
+        related_name='tasks_executed'
     )
     status = models.ForeignKey(
         'statuses.Status',
