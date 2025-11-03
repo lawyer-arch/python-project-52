@@ -108,6 +108,6 @@ class UsersDeleteView(
 
         # Если связей нет — вызываем стандартное удаление
         response = super().delete(request, *args, **kwargs)
-        messages.success(request, _("Пользователь успешно удалён"))
+        messages.success(request, _("Пользователь успешно удален"))
         logger.info(f"Пользователь {user_id} удалён")
         return response
