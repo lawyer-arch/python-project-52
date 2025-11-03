@@ -154,16 +154,23 @@ LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 LOGIN_URL = "/login/"
 
+#  Логируем ошибки внимание к БД
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
         "verbose": {
-            "format": "{levelname} {asctime} {module} {message}",
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
             "style": "{",
         },
     },
     "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
         "file": {
             "level": "INFO",
             "class": "logging.FileHandler",
@@ -172,6 +179,16 @@ LOGGING = {
         },
     },
     "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
+            "propagate": True,
+        },
+        "django.db.backends": {
+            "handlers": ["console"],  # Выведет SQL-запросы в stdout
+            "level": "DEBUG",
+            "propagate": False,
+        },
         "users": {
             "handlers": ["file"],
             "level": "INFO",
