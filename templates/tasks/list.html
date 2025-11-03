@@ -18,7 +18,6 @@
                     <div class="mb-3 mx-2">
                         <label for="status" class="form-label">{% trans "Статус" %}</label>
                         <select name="status" class="form-select" id="status">
-                            <option value="" selected>---------</option>
                             {% for status in filter.form.status.field.choices %}
                             <option value="{{ status.0 }}">{{ status.1 }}</option>
                             {% endfor %}
@@ -29,7 +28,6 @@
                     <div class="mb-3 mx-2">
                         <label for="executor" class="form-label">{% trans "Исполнитель" %}</label>
                         <select name="executor" class="form-select" id="executor">
-                            <option value="" selected>---------</option>
                             {% for executor in filter.form.executor.field.choices %}
                             <option value="{{ executor.0 }}">{{ executor.1 }}</option>
                             {% endfor %}
@@ -40,7 +38,6 @@
                     <div class="mb-3 mx-2">
                         <label for="labels" class="form-label">{% trans "Метки" %}</label>
                         <select name="labels" class="form-select" id="label">
-                            <option value="" selected>---------</option>
                             {% for value, name in filter.form.label.field.choices %}
                             <option value="{{ value }}">{{ name }}</option>
                             {% endfor %}

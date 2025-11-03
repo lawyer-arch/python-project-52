@@ -12,19 +12,16 @@ from labels.models import Label
 class TaskFilter(django_filters.FilterSet):
     status = django_filters.ModelChoiceFilter(
         queryset=Status.objects.all(),
-        empty_label="---------"
     )
 
     executor = django_filters.ModelChoiceFilter(
         queryset=User.objects.all(),
-        empty_label="---------",
         label="Исполнитель",
         widget=forms.Select(attrs={'class': 'form-select'})
     )
 
     label = django_filters.ModelChoiceFilter(
         queryset=Label.objects.all(),
-        empty_label="---------",
         label="Метки"
     )
 
