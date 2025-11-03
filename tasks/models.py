@@ -21,7 +21,7 @@ class Task(models.Model):
         null=True,
         blank=True,
         verbose_name=_("Исполнитель"),
-        related_name='tasks_executed'
+        related_name='Исполнитель'
     )
     status = models.ForeignKey(
         'statuses.Status',
@@ -34,7 +34,7 @@ class Task(models.Model):
         Label,
         blank=True,
         related_name='tasks',
-        verbose_name=_("Метки"),
+        verbose_name=_("Метка"),
     )
 
     created_at = models.DateTimeField(verbose_name=_("Дата создания"), auto_now_add=True)
