@@ -84,12 +84,9 @@
                             <td>{{ task.executor}}</td>
                             <td>{{ task.created_at|date:"d.m.Y H:i" }}</td>
                             <td>
-                                <a href="{% url 'tasks:tasks_update' task.id %}" class="btn btn-sm btn-outline-primary">
-                                {% trans "Изменить" %}
-                                </a>
-                                <a href="{% url 'tasks:tasks_delete' task.id %}" class="btn btn-sm btn-outline-danger">
-                                {% trans "Удалить" %}
-                                </a>
+                                <a href="{% url 'tasks:tasks_update' task.id %}">{% trans "Изменить" %}</a>
+                                <br>
+                                <a href="{% url 'tasks:tasks_delete' task.id %}">{% trans "Удалить" %}</a>
                             </td>
                         </tr>
                         {% empty %}

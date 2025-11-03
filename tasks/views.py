@@ -10,6 +10,7 @@ from django_filters.views import FilterView
 
 from .filters import TaskFilter
 from .models import Task
+from .forms import TaskForm
 
 
 logger = logging.getLogger("tasks")
@@ -64,9 +65,9 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
 # ---------------------------
 class TaskCreateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin, CreateView):
     model = Task
+    form_class = TaskForm
     template_name = 'tasks/create.html'
     context_object_name = "task"
-    fields = ['name', 'description', 'status', 'executor', 'labels']
     success_url = reverse_lazy("tasks:tasks_list")
     success_message = _("Задача успешно создана")
     log_message = "Создана задача: {obj}"
@@ -81,9 +82,9 @@ class TaskCreateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin, C
 # ---------------------------
 class TaskUpdateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin, UpdateView):
     model = Task
+    form_class = TaskForm
     template_name = 'tasks/update.html'
     context_object_name = "task"
-    fields = ['name', 'description', 'status', 'executor', 'labels']
     success_url = reverse_lazy("tasks:tasks_list")
     success_message = _("Задача успешно изменена")
     log_message = "Изменена задача: {obj}"
