@@ -17,5 +17,3 @@ class TaskForm(forms.ModelForm):
         self.fields['labels'].queryset = Label.objects.all()
         # label для select по исполнителю
         self.fields['executor'].label_from_instance = lambda obj: obj.username
-        print("Executors in form:", list(TaskForm().fields['executor'].queryset))
-        print("Executors in form:", list(self.fields['executor'].queryset))
