@@ -9,7 +9,7 @@
     
     <form action="{% url 'statuses:statuses_delete' object.id %}" method="post">
         {% csrf_token %}
-        <button type="submit" class="btn btn-danger">{% trans "Удалить" %}</button>
+        <button type="submit" class="btn btn-danger">{% trans "Да, удалить" %}</button>
     </form>
 </div>
 {% endblock %}
