@@ -9,6 +9,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 from .models import Status
+from tasks.models import Task
 from .forms import StatusForm
 
 logger = logging.getLogger("statuses")
@@ -67,30 +68,21 @@ class StatusDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
     model = Status
     template_name = "statuses/delete.html"
     success_url = reverse_lazy("statuses:statuses_list")
+    success_message = _("Статус успешно удалён")
 
     def post(self, request, *args, **kwargs):
-        """
-        Логирование удаления и проверка связанных задач.
-        Если объект используется в задачах, удаление запрещено.
-        """
         self.object = self.get_object()
+        status_id = self.object.id
 
-        # Проверяем наличие связанных задач ДО запуска стандартного удаления
-        if self.object.task_set.exists():
-            messages.error(request, _("Невозможно удалить статус, он используется задачами!"))
-            return redirect(self.success_url)
+        if Task.objects.filter(status=self.object).exists():
+            messages.error(
+                request,
+                _("Невозможно удалить статус, потому что он используется")
+            )
+            logger.warning(f"Попытка удалить статус {status_id}, который используется")
+            return redirect("statuses:statuses_list")
 
-        # Если задач нет, продолжаем удаление
-        try:
-            # Удаляем объект вручную
-            self.object.delete()
-            logger.info(f"Статус удален: {self.object}")
-            messages.success(request, _("Статус успешно удален"))
-        except ObjectDoesNotExist:
-            # Объект уже удалён кем-то другим
-            messages.warning(request, _("Объект уже удалён."))
-        except Exception as e:
-            # Обработка любых неожиданных ошибок
-            messages.error(request, f"{_('Возникла ошибка при удалении')}: {str(e)}")
-
-        return redirect(self.success_url)
+        response = super().delete(request, *args, **kwargs)
+        messages.success(request, self.success_message)
+        logger.info(f"Статус {status_id} удалён")
+        return response

@@ -13,7 +13,7 @@
                 <th>ID</th>
                 <th>{% trans "Имя" %}</th>
                 <th>{% trans "Дата создания" %}</th>
-                <th>{% trans "Действия" %}</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -23,13 +23,9 @@
                 <td>{{ status.name }}</td>
                 <td>{{ status.created_at|date:"d.m.Y H:i" }}</td>
                 <td>
-                    <a href="{% url 'statuses:statuses_update' status.id%}" class="btn btn-sm btn-outline-primary">
-                        {% trans "Изменить" %}
-                    </a>
-                    <form action="{% url 'statuses:statuses_delete' status.id %}" method="post" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-outline-danger">Удалить</button>
-                    </form>
+                    <a href="{% url 'statuses:statuses_update' status.id%}">{% trans "Изменить" %}</a>
+                    <br>
+                    <a href="{% url 'statuses:statuses_delete' status.id%}">{% trans "Удалить" %}</a>
                 </td>
             </tr>
             {% empty %}

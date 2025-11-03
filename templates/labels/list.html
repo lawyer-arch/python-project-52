@@ -24,15 +24,9 @@
                 <td>{{ label.created_at|date:"d.m.Y H:i" }}</td>
                 <td>
                     <div class="d-flex gap-2">
-                        <a href="{% url 'labels:labels_update' label.id %}" class="btn btn-sm btn-outline-primary">
-                            {% trans "Изменить" %}
-                        </a>
-                        <form action="{% url 'labels:labels_delete' label.id %}" method="post" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-sm btn-outline-danger">
-                                {% trans "Удалить" %}
-                            </button>
-                        </form>
+                        <a href="{% url 'labels:labels_update' label.id %}">{% trans "Изменить" %}</a>
+                        <br>
+                        <a href="{% url 'labels:labels_delete' label.id %}">{% trans "Удалить" %}</a>
                     </div>
                 </td>
             </tr>

@@ -184,11 +184,7 @@ LOGGING = {
             "level": "INFO",
             "propagate": True,
         },
-        "django.db.backends": {
-            "handlers": ["console"],  # Выведет SQL-запросы в stdout
-            "level": "DEBUG",
-            "propagate": False,
-        },
+        
         "users": {
             "handlers": ["file"],
             "level": "INFO",

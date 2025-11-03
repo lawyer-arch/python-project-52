@@ -4,13 +4,12 @@
 
 {% block content %}
 <div class="container my-4">
-    <h1 class="my-4">{% trans "Подтвердить удаление" %}</h1>
-    <p>{% trans "Вы уверены, что хотите удалить статус?" %} <strong>{{ user.get_full_name }}</strong>?</p>
+    <h1 class="my-4">{% trans "Удаление статуса" %}</h1>
+    <p>{% trans "Вы уверены, что хотите удалить статус" %} <strong>{{ object.name }}</strong>?</p>
     
-    <form action="{% url 'statuses:statuses_delete' user.id %}" method="post">
+    <form action="{% url 'statuses:statuses_delete' object.id %}" method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">{% trans "Удалить" %}</button>
-        <a href="{% url 'statuses:statuses_list' %}" class="btn btn-secondary">{% trans "Отмена" %}</a>
     </form>
 </div>
 {% endblock %}

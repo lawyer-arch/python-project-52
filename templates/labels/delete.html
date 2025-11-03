@@ -5,12 +5,11 @@
 {% block content %}
 <div class="container my-4">
     <h1 class="my-4">{% trans "Подтвердить удаление" %}</h1>
-    <p>{% trans "Вы уверены, что хотите удалить метку?" %} <strong>{{ label.name }}</strong>?</p>
+    <p>{% trans "Вы уверены, что хотите удалить метку" %} <strong>{{ object.name }}</strong>?</p>
     
     <form action="{% url 'labels:labels_delete' label.id %}" method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">{% trans "Удалить" %}</button>
-        <a href="{% url 'labels:labels_list' %}" class="btn btn-secondary">{% trans "Отмена" %}</a>
     </form>
 </div>
 {% endblock %}
