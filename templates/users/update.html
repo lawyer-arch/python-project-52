@@ -10,7 +10,6 @@
             {% csrf_token %}
             {% bootstrap_form form %}
             <input class="btn btn-primary" type="submit" value="{% trans 'Изменить' context 'verb' %}">
-            <a href="{% url 'users:users_list' %}" class="btn btn-secondary">{% trans 'Отмена' %}</a>
         </div>
     </div>
 </form>
