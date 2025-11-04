@@ -20,10 +20,12 @@ class TaskFilter(django_filters.FilterSet):
         widget=forms.Select(attrs={'class': 'form-select'})
     )
 
-    label = django_filters.ModelChoiceFilter(
+    label = django_filters.ModelMultipleChoiceFilter(
+        field_name='labels',  # Связанное поле ManyToManyField
         queryset=Label.objects.all(),
         label="Метка",
-        widget=forms.Select(attrs={'class': 'form-select'})
+        widget=forms.SelectMultiple(attrs={'class': 'form-select'}),  # Возможность выбора нескольких меток
+        conjoined=True,  # Выбор хотя бы одной метки из множества (AND логика)
     )
 
     own_task = django_filters.BooleanFilter(

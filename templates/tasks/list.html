@@ -38,6 +38,7 @@
                     <div class="mb-3 mx-2">
                         <label for="labels" class="form-label">{% trans "Метка" %}</label>
                         <select name="labels" class="form-select" id="label">
+                            <option value="">-----------</option>
                             {% for value, name in filter.form.label.field.choices %}
                             <option value="{{ value }}">{{ name }}</option>
                             {% endfor %}
