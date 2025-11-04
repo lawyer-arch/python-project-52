@@ -3,42 +3,50 @@
 {% load i18n %}
 
 {% block content %}
-<div class="container my-4">
-    <h1>{% trans "Статусы" %}</h1>
-    <a class="btn btn-primary btn-lg" href="{% url 'statuses:statuses_create'%}">{% trans "Создать статус" %}</a>
-    <table class="table table-striped table-hover align-middle">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>{% trans "Имя" %}</th>
-                <th>{% trans "Дата создания" %}</th>
-                <th>{% trans "Действия" %}</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for status in statuses %}
-            <tr>
-                <td>{{ status.id }}</td>
-                <td>{{ status.name }}</td>
-                <td>{{ status.created_at|date:"d.m.Y H:i" }}</td>
-                <td>
-                    <a href="{% url 'statuses:statuses_update' status.id%}" class="btn btn-sm btn-outline-primary">
-                        {% trans "Изменить" %}
-                    </a>
-                    <form action="{% url 'statuses:statuses_delete' status.id %}" method="post" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-sm btn-outline-danger">Удалить</button>
-                    </form>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="5" class="text-center text-muted">
-                    {% trans "Нет статуса" %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="container wrapper flex-grow-1">
+    <h1 class="my-4">Просмотр задачи</h1>
+    <div class="card">
+        <div class="card-header" style="background-color: #e6e6fa;">
+            <h2 class="my-2">{{ task.name }}</h2>
+        </div>
+        <div class="card-body bg-light">
+            <p>{{ task.description }}</p>
+            <hr>
+            <div class="container">
+                <div class="row p-1">
+                    <div class="col font-weight-bold">{% trans "Автор" %}</div>
+                    <div class="col">{{ task.author }}</div>
+                </div>
+                <div class="row p-1">
+                    <div class="col font-weight-bold">{% trans "Исполнитель" %}</div>
+                    <div class="col">{{ task.executor }}</div>
+                </div>
+                <div class="row p-1">
+                    <div class="col font-weight-bold">{% trans "Статус" %}</div>
+                    <div class="col">{{ task.status }}</div>
+                </div>
+                <div class="row p-1">
+                    <div class="col font-weight-bold">{% trans "Дата создания" %}</div>
+                    <div class="col">{{ task.created_at|date:"d.m.Y H:i" }}</div>
+                </div>
+                <div class="row p-1">
+                    <div class="col">
+                        <h6>{% trans "Метки" %}:</h6>
+                        <ul class="pl-3">
+                            {% for label in task.labels.all %}
+                            <li>{{ label }}</li>
+                            {% empty %}
+                            <li>(нет меток)</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="row justify-content-end">
+                    <a href="{% url 'tasks:tasks_update' task.id %}">Изменить</a>
+                    <a href="{% url 'tasks:tasks_delete' task.id %}">Удалить</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
