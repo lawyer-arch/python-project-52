@@ -16,4 +16,4 @@ class TaskForm(forms.ModelForm):
         self.fields['status'].queryset = Status.objects.all()
         self.fields['labels'].queryset = Label.objects.all()
         # label для select по исполнителю
-        self.fields['executor'].label_from_instance = lambda obj: obj.username
+        self.fields['executor'].label_from_instance = lambda obj: obj.get_full_name()
