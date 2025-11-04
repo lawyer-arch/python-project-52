@@ -49,6 +49,7 @@ wheels/
 docs/_build/
 hexlet_code.egg-info/
 
+
 # Celery файлы
 celerybeat-schedule
 celerybeat.pid
