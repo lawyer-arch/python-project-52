@@ -15,11 +15,11 @@
             <div class="container">
                 <div class="row p-1">
                     <div class="col font-weight-bold">{% trans "Автор" %}</div>
-                    <div class="col">{{ task.author }}</div>
+                    <div class="col">{{ task.author.get_full_name }}</div>
                 </div>
                 <div class="row p-1">
                     <div class="col font-weight-bold">{% trans "Исполнитель" %}</div>
-                    <div class="col">{{ task.executor }}</div>
+                    <div class="col">{{ task.executor.get_full_name }}</div>
                 </div>
                 <div class="row p-1">
                     <div class="col font-weight-bold">{% trans "Статус" %}</div>
