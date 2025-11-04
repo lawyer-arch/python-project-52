@@ -34,7 +34,7 @@ class Task(models.Model):
         Label,
         blank=True,
         related_name='tasks',
-        verbose_name=_("Метка"),
+        verbose_name=_("Метки"),
     )
 
     created_at = models.DateTimeField(verbose_name=_("Дата создания"), auto_now_add=True)
