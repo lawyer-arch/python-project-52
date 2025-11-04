@@ -20,8 +20,7 @@ class Task(models.Model):
         on_delete=models.PROTECT,
         null=True,
         blank=True,
-        verbose_name=_("Исполнитель"),
-        related_name='tasks_executed'
+        verbose_name=_("Исполнитель")
     )
     status = models.ForeignKey(
         'statuses.Status',

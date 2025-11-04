@@ -16,6 +16,7 @@ class RegisterForm(UserCreationForm):
         )
 
 
+
 class CustomUserChangeForm(forms.ModelForm):
     # Дублируем поля паролей вручную
     password1 = forms.CharField(
