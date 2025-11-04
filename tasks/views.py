@@ -39,17 +39,6 @@ class TaskListView(LoginRequiredMixin, FilterView):
     context_object_name = 'tasks'
     filterset_class = TaskFilter
 
-    def get_queryset(self):
-        # Берём базовый queryset и фильтруем его
-        qs = super().get_queryset()
-        return qs
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # filterset доступен как self.filterset
-        context['filter'] = self.filterset
-        return context
-
 
 # ---------------------------
 # Вывод конкретной задачи
