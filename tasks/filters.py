@@ -22,7 +22,8 @@ class TaskFilter(django_filters.FilterSet):
 
     label = django_filters.ModelChoiceFilter(
         queryset=Label.objects.all(),
-        label="Метка"
+        label="Метка",
+        widget=forms.Select(attrs={'class': 'form-select'})
     )
 
     own_task = django_filters.BooleanFilter(
