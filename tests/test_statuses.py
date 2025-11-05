@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
 
-from statuses.models import Status
+from task_manager.statuses.models import Status
 
 
 @pytest.mark.django_db

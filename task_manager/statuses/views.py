@@ -2,7 +2,6 @@ import logging
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.exceptions import ObjectDoesNotExist
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
@@ -45,7 +44,7 @@ class StatusCreateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin,
     form_class = StatusForm
     template_name = "statuses/create.html"
     success_url = reverse_lazy("statuses:statuses_list")  # Редирект на список после создания
-    success_message = _("Статус успешно создан!")
+    success_message = _("Статус успешно создан")
     log_message = "Создан статус: {obj}"
 
 

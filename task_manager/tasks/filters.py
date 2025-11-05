@@ -45,5 +45,5 @@ class TaskFilter(django_filters.FilterSet):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Обновляем лейбл после полной инициализации фильтра применив extra.update 
+        # Обновляем лейбл после полной инициализации фильтра применив extra.update
         self.filters['executor'].field.label_from_instance = lambda obj: obj.get_full_name()
