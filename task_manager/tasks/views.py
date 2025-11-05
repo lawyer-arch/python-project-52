@@ -87,13 +87,14 @@ class TaskDeleteView(UserPassesTestMixin, LoginRequiredMixin, SuccessMessageMixi
     template_name = "tasks/delete.html"
     context_object_name = "task"
     success_url = reverse_lazy("tasks:tasks_list")
+    success_message = _("Задача успешно удалена")
 
     def test_func(self):
         obj = self.get_object()
         return obj.author == self.request.user
 
     def handle_no_permission(self):
-        messages.error(self.request, _("Невозможно удалить задачу — вы не являетесь ее автором"))
+        messages.error(self.request, _("Задачу может удалить только ее автор"))
         return redirect('tasks:tasks_list')
 
     def delete(self, request, *args, **kwargs):

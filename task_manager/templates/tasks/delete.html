@@ -5,12 +5,11 @@
 {% block content %}
 <div class="container my-4">
     <h1 class="my-4">{% trans "Подтвердить удаление" %}</h1>
-    <p>{% trans "Вы уверены, что хотите удалить задачу?" %} <strong>{{ user.get_full_name }}</strong>?</p>
+    <p>{% trans "Вы уверены, что хотите удалить задачу" %}<strong>{{ user.get_full_name }}</strong>?</p>
     
     <form action="{% url 'tasks:tasks_delete' task.id %}" method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-danger">{% trans "Да, удалить" %}</button>
-        <a href="{% url 'tasks:tasks_list' %}" class="btn btn-secondary">{% trans "Отмена" %}</a>
     </form>
 </div>
 {% endblock %}
