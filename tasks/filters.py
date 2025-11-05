@@ -1,4 +1,3 @@
-
 import django_filters
 from django import forms
 from django.contrib.auth.models import User
@@ -40,3 +39,11 @@ class TaskFilter(django_filters.FilterSet):
             return queryset.filter(author=self.request.user)
         return queryset
 
+    class Meta:
+        model = Task
+        fields = ['status', 'executor', 'labels', 'own_task']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Обновляем лейбл после полной инициализации фильтра применив extra.update 
+        self.filters['executor'].field.label_from_instance = lambda obj: obj.get_full_name()
