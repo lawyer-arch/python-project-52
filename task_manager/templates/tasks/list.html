@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load django_bootstrap5 %}
+{% load i18n %}
+
+{% block content %}
+<div class="container-fluid my-4">
+    <div class="row justify-content-center">
+
+        <!-- Левая сторона: Карточка с фильтрацией -->
+        <div class="col-md-3 col-xl-2" style="margin-top: 170px;">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">{% trans "Фильтры" %}</h5>
+                </div>
+
+                <form method="get" class="my-4 mb-3 mx-2">
+                    {% bootstrap_form filter.form layout='vertical' show_label=True %}
+                    <button type="submit" class="btn btn-primary mb-3 mx-2">{% trans "Показать" %}</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Правая сторона: Форма со списком -->
+        <div class="col-md-9 col-xl-9">
+            <h1 class="my-1">{% trans "Задачи" %}</h1>
+            <a class="btn btn-primary mb-3" href="{% url 'tasks:tasks_create'%}">{% trans "Создать задачу" %}</a>
+            
+            <form class="my-4">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>{% trans "Имя" %}</th>
+                            <th>{% trans "Статус" %}</th>
+                            <th>{% trans "Автор" %}</th>
+                            <th>{% trans "Исполнитель" %}</th>
+                            <th>{% trans "Дата создания" %}</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for task in tasks %}
+                        <tr>
+                            <td>{{ task.id }}</td>
+                            <td><a href="{% url 'tasks:tasks_detail' task.id %}">{{ task.name }}</a></td>
+                            <td>{{ task.status }}</td>
+                            <td>{{ task.author.get_full_name }}</td>
+                            <td>{{ task.executor.get_full_name }}</td>
+                            <td>{{ task.created_at|date:"d.m.Y H:i" }}</td>
+                            <td>
+                                <a href="{% url 'tasks:tasks_update' task.id %}">{% trans "Изменить" %}</a>
+                                <br>
+                                <a href="{% url 'tasks:tasks_delete' task.id %}">{% trans "Удалить" %}</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center text-muted">
+                            {% trans "Нет задачь" %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

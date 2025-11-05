@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse_lazy
 
 from .forms import RegisterForm, CustomUserChangeForm
-from tasks.models import Task
+from task_manager.tasks.models import Task
 
 logger = logging.getLogger("users")
 

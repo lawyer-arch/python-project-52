@@ -9,7 +9,7 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 from .models import Status
-from tasks.models import Task
+from task_manager.tasks.models import Task
 from .forms import StatusForm
 
 logger = logging.getLogger("statuses")

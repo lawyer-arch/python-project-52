@@ -9,7 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django_filters.views import FilterView
 
 from .models import Label
-from tasks.models import Task
+from task_manager.tasks.models import Task
 
 
 logger = logging.getLogger("labels")
