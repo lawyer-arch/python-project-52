@@ -22,7 +22,13 @@ from .views import HomePageView, CustomLoginView, CustomLogoutView
 
 urlpatterns = [
     path("", HomePageView.as_view(), name="home"),
-    path("login/", CustomLoginView.as_view(template_name="registration/login.html"), name="login"),
+    path(
+        "login/",
+        CustomLoginView.as_view(
+            template_name="registration/login.html"
+        ),
+        name="login"
+    ),
     path("logout/", CustomLogoutView.as_view(), name="logout"),
     path("users/", include("task_manager.users.urls")),
     path("statuses/", include("task_manager.statuses.urls")),

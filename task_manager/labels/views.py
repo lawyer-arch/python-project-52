@@ -1,6 +1,12 @@
 import logging
 from django.shortcuts import redirect
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import(
+    ListView,
+    CreateView,
+    UpdateView,
+    DeleteView,
+    DetailView
+)
 from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
@@ -50,7 +56,12 @@ class LabelDetailView(LoginRequiredMixin, DetailView):
 # ---------------------------
 # Создание метки
 # ---------------------------
-class LabelCreateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin, CreateView):
+class LabelCreateView(
+    LoginRequiredMixin,
+    FormLoggerMixin,
+    SuccessMessageMixin,
+    CreateView
+):
     model = Label
     template_name = 'labels/create.html'
     context_object_name = "label"
@@ -67,7 +78,12 @@ class LabelCreateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin, 
 # ---------------------------
 # Редактирование метки
 # ---------------------------
-class LabelUpdateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin, UpdateView):
+class LabelUpdateView(
+    LoginRequiredMixin,
+    FormLoggerMixin,
+    SuccessMessageMixin,
+    UpdateView
+):
     model = Label
     template_name = 'labels/update.html'
     context_object_name = "label"
@@ -88,18 +104,22 @@ class LabelDeleteView(LoginRequiredMixin, DeleteView):
 
     def post(self, request, *args, **kwargs):
         """
-        Переопределяем POST, чтобы перед удалением проверить связанные задачи.
+        Переопределяем POST, 
+        чтобы перед удалением проверить связанные задачи.
         """
-        self.object = self.get_object()  # объект берётся по pk из URL
+        self.object = self.get_object()
         label_id = self.object.id
 
         # Проверяем, есть ли задачи с этой меткой
         if Task.objects.filter(labels=self.object).exists():
             messages.error(
                 request,
-                "Невозможно удалить метку, потому что она используется в задачах"
+                "Невозможно удалить метку, " \
+                "потому что она используется в задачах"
             )
-            logger.warning(f"Попытка удалить метку {label_id}, связанную с задачами")
+            logger.warning(
+                f"Попытка удалить метку {label_id}, связанную с задачами"
+            )
             return redirect(self.success_url)
 
         # Если связей нет — вызываем стандартное удаление

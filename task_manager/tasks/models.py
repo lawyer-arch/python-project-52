@@ -37,7 +37,10 @@ class Task(models.Model):
         verbose_name=_("Метки"),
     )
 
-    created_at = models.DateTimeField(verbose_name=_("Дата создания"), auto_now_add=True)
+    created_at = models.DateTimeField(
+        verbose_name=_("Дата создания"),
+        auto_now_add=True
+    )
 
     def __str__(self):
         return self.name

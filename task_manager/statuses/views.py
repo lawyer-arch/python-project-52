@@ -16,7 +16,8 @@ logger = logging.getLogger("statuses")
 
 class FormLoggerMixin:
     """
-    Логирует успешное сохранение/изменение объекта в CreateView/UpdateView/DeleteView.
+    Логирует успешное сохранение/изменение объекта
+    в CreateView/UpdateView/DeleteView.
     """
 
     log_message = "Создан объект: {obj}"
@@ -39,11 +40,16 @@ class StatusListView(LoginRequiredMixin, ListView):
 # ---------------------------
 # Создание статуса
 # ---------------------------
-class StatusCreateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin, CreateView):
+class StatusCreateView(
+    LoginRequiredMixin,
+    FormLoggerMixin,
+    SuccessMessageMixin,
+    CreateView
+):
     model = Status
     form_class = StatusForm
     template_name = "statuses/create.html"
-    success_url = reverse_lazy("statuses:statuses_list")  # Редирект на список после создания
+    success_url = reverse_lazy("statuses:statuses_list")
     success_message = _("Статус успешно создан")
     log_message = "Создан статус: {obj}"
 
@@ -51,11 +57,16 @@ class StatusCreateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin,
 # ---------------------------
 # Обновление статуса
 # ---------------------------
-class StatusUpdateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin, UpdateView):
+class StatusUpdateView(
+    LoginRequiredMixin,
+    FormLoggerMixin,
+    SuccessMessageMixin,
+    UpdateView
+):
     model = Status
-    form_class = StatusForm  # Обязательный параметр для UpdateView
+    form_class = StatusForm
     template_name = "statuses/update.html"
-    success_url = reverse_lazy("statuses:statuses_list")  # Редирект на список после обновления
+    success_url = reverse_lazy("statuses:statuses_list")
     success_message = _("Статус успешно изменен")
     log_message = "Статус обновлён: {obj}"
 
@@ -78,7 +89,9 @@ class StatusDeleteView(SuccessMessageMixin, LoginRequiredMixin, DeleteView):
                 request,
                 _("Невозможно удалить статус, потому что он используется")
             )
-            logger.warning(f"Попытка удалить статус {status_id}, который используется")
+            logger.warning(
+                f"Попытка удалить статус {status_id}, который используется"
+            )
             return redirect("statuses:statuses_list")
 
         response = super().delete(request, *args, **kwargs)

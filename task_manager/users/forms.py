@@ -16,7 +16,6 @@ class RegisterForm(UserCreationForm):
         )
 
 
-
 class CustomUserChangeForm(forms.ModelForm):
     # Дублируем поля паролей вручную
     password1 = forms.CharField(
@@ -54,7 +53,10 @@ class CustomUserChangeForm(forms.ModelForm):
         username = self.cleaned_data.get('username')
         if not username:
             username = self.instance.username
-        if User.objects.exclude(pk=self.instance.pk).filter(username=username).exists():
+        if (
+            User.objects.exclude(pk=self.instance.pk).
+            filter(username=username).exists()
+            ):
             raise ValidationError("Пользователь с таким именем уже существует.")
         return username
 

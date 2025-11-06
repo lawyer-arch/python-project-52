@@ -6,16 +6,24 @@ from django.contrib.auth.models import User
 
 from task_manager.users.forms import RegisterForm, CustomUserChangeForm
 
+
 # -------------------------
 #  Тесты на основе TestCase
 # -------------------------
 class UsersViewsTest(TestCase):
-    #  Создание тестового пользователя в базе данных и вход в систему под его именем
+    #  Создание тестового пользователя 
+    # в базе данных и вход в систему под его именем
     def setUp(self):
         self.user = User.objects.create_user(
-            username="testuser", password="password123", first_name="Test", last_name="User"
+            username="testuser",
+            password="password123",
+            first_name="Test",
+            last_name="User"
         )
-        self.client.login(username="testuser", password="password123")
+        self.client.login(
+            username="testuser",
+            password="password123"
+        )
 
     #  Проверяем работу представления (view) для списка пользователей
     def test_users_list_view(self):
@@ -74,7 +82,8 @@ class UsersViewsTest(TestCase):
         messages = list(get_messages(response.wsgi_request))
         self.assertTrue(any("нет прав" in str(m).lower() for m in messages))
 
-    #  Базовая функциональность страницы входа и корректность отображения формы авторизации
+    #  Базовая функциональность страницы входа и
+    #  корректность отображения формы авторизации
     def test_login_view(self):
         self.client.logout()
         url = reverse("login")
@@ -109,7 +118,10 @@ class UsersViewsTest(TestCase):
         # 3. Проверка сообщения об успехе
         messages = list(get_messages(response.wsgi_request))
         self.assertEqual(len(messages), 1)
-        self.assertEqual(str(messages[0]), "Пользователь успешно зарегистрирован")
+        self.assertEqual(
+            str(messages[0]),
+            "Пользователь успешно зарегистрирован"
+        )
         # 4. Проверка авторизации
         user = User.objects.get(username="newuser")
         self.assertIsNotNone(user)
@@ -156,16 +168,20 @@ class RegisterFormTest(TestCase):
         self.assertIn("password1", form.errors)
         self.assertIn("password2", form.errors)
 
+
 class CustomUserChangeFormTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
-            username="testuser", first_name="Тестовый", last_name="Пользователь", password="testpass123"
+            username="testuser",
+            first_name="Тестовый",
+            last_name="Пользователь",
+            password="testpass123"
         )
 
     def test_password_field_presence(self):
         # Теперь проверим, что поля пароля включены в форму
         form = CustomUserChangeForm(instance=self.user)
-        self.assertIn("password1", form.fields.keys())  # Поля пароля должны присутствовать
+        self.assertIn("password1", form.fields.keys())
         self.assertIn("password2", form.fields.keys())
 
 

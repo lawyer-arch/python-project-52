@@ -3,6 +3,7 @@ from django.contrib.admin import DateFieldListFilter, RelatedOnlyFieldListFilter
 
 from .models import Task
 
+
 @admin.register(Task)
 class TaskAdmin(admin.ModelAdmin):
     list_display = (

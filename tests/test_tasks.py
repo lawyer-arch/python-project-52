@@ -6,13 +6,19 @@ from django.contrib.messages import get_messages
 from task_manager.statuses.models import Status
 from task_manager.tasks.models import Task
 
+
 @pytest.fixture
 def user(db):
-    return User.objects.create_user(username="user1", password="Password123")
+    return User.objects.create_user(
+        username="user1",
+        password="Password123"
+    )
+
 
 @pytest.fixture
 def status(db):
     return Status.objects.create(name="Новый")
+
 
 @pytest.fixture
 def task(db, user, status):
@@ -22,6 +28,7 @@ def task(db, user, status):
         author=user,
         status=status
     )
+
 
 @pytest.fixture
 def client_logged(client, user):

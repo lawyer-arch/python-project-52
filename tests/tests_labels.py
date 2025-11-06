@@ -7,13 +7,19 @@ from task_manager.tasks.models import Task
 from task_manager.labels.models import Label
 from task_manager.statuses.models import Status
 
+
 @pytest.fixture
 def user(db):
-    return User.objects.create_user(username="user1", password="Password123")
+    return User.objects.create_user(
+        username="user1",
+        password="Password123"
+    )
+
 
 @pytest.fixture
 def status(db):
     return Status.objects.create(name="Новый")
+
 
 @pytest.fixture
 def task(db, user, status):
@@ -24,14 +30,20 @@ def task(db, user, status):
         status=status
     )
 
+
 @pytest.fixture
 def label(db):
     return Label.objects.create(name="Важная")
 
+
 @pytest.fixture
 def client_logged(client, user):
-    client.login(username=user.username, password="Password123")
+    client.login(
+        username=user.username,
+        password="Password123"
+        )
     return client
+
 
 @pytest.mark.django_db
 class TestLabelCRUD:
@@ -105,4 +117,7 @@ class TestLabelCRUD:
         response = client_logged.get(url)
         assert response.status_code == 200
         assert label.name in response.context['labels'].name
-        assert response.context['labels'].created_at.date() == label.created_at.date()
+        assert (
+            response.context['labels'].created_at.date() == 
+            label.created_at.date()
+        )

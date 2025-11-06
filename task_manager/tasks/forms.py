@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from task_manager.statuses.models import Status
 from task_manager.labels.models import Label
 
+
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
@@ -17,4 +18,6 @@ class TaskForm(forms.ModelForm):
         self.fields['status'].queryset = Status.objects.all()
         self.fields['labels'].queryset = Label.objects.all()
         # label для select по исполнителю
-        self.fields['executor'].label_from_instance = lambda obj: obj.get_full_name()
+        self.fields['executor'].label_from_instance = (
+            lambda obj: obj.get_full_name()
+        )

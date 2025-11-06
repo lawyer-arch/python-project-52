@@ -3,6 +3,7 @@ from django.contrib.admin import DateFieldListFilter, AllValuesFieldListFilter
 
 from .models import Status
 
+
 @admin.register(Status)
 class StatusAdmin(admin.ModelAdmin):
     list_display = ('name', 'created_at')

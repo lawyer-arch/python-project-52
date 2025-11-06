@@ -11,7 +11,10 @@ class TestStatusCRUD:
     #  Создаёт тестового пользователя.
     @pytest.fixture
     def user(self):
-        return User.objects.create_user(username="testuser", password="password123")
+        return User.objects.create_user(
+            username="testuser",
+            password="password123"
+        )
 
     #  Логинит тестового пользователя в Django-тестовом клиенте.
     @pytest.fixture
@@ -19,13 +22,15 @@ class TestStatusCRUD:
         client.login(username="testuser", password="password123")
         return client
 
-    #  Проверяет, что неавторизованный пользователь не может просматривать список статусов.
+    #  Проверяет, что неавторизованный пользователь 
+    # не может просматривать список статусов.
     def test_list_requires_login(self, client):
         url = reverse("statuses:statuses_list")
         response = client.get(url)
         assert response.status_code == 302  # редирект на логин
 
-    #  Проверяет, что авторизованный пользователь получает страницу со списком статусов.
+    #  Проверяет, что авторизованный пользователь 
+    # получает страницу со списком статусов.
     def test_list_view_logged_user(self, client_logged):
         url = reverse("statuses:statuses_list")
         response = client_logged.get(url)

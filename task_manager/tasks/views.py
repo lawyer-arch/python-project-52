@@ -52,7 +52,12 @@ class TaskDetailView(LoginRequiredMixin, DetailView):
 # ---------------------------
 # Создание задачи
 # ---------------------------
-class TaskCreateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin, CreateView):
+class TaskCreateView(
+    LoginRequiredMixin,
+    FormLoggerMixin,
+    SuccessMessageMixin,
+    CreateView
+):
     model = Task
     form_class = TaskForm
     template_name = 'tasks/create.html'
@@ -69,11 +74,16 @@ class TaskCreateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin, C
 # ---------------------------
 # Редактирование задачи
 # ---------------------------
-class TaskUpdateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin, UpdateView):
+class TaskUpdateView(
+    LoginRequiredMixin,
+    FormLoggerMixin,
+    SuccessMessageMixin,
+    UpdateView
+):
     model = Task
+    context_object_name = "task"
     form_class = TaskForm
     template_name = 'tasks/update.html'
-    context_object_name = "task"
     success_url = reverse_lazy("tasks:tasks_list")
     success_message = _("Задача успешно изменена")
     log_message = "Изменена задача: {obj}"
@@ -82,7 +92,12 @@ class TaskUpdateView(LoginRequiredMixin, FormLoggerMixin, SuccessMessageMixin, U
 # ---------------------------
 # Удаление задачи
 # ---------------------------
-class TaskDeleteView(UserPassesTestMixin, LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class TaskDeleteView(
+    UserPassesTestMixin,
+    LoginRequiredMixin,
+    SuccessMessageMixin,
+    DeleteView
+):
     model = Task
     template_name = "tasks/delete.html"
     context_object_name = "task"
@@ -94,7 +109,10 @@ class TaskDeleteView(UserPassesTestMixin, LoginRequiredMixin, SuccessMessageMixi
         return obj.author == self.request.user
 
     def handle_no_permission(self):
-        messages.error(self.request, _("Задачу может удалить только ее автор"))
+        messages.error(
+            self.request,
+            _("Задачу может удалить только ее автор")
+        )
         return redirect('tasks:tasks_list')
 
     def delete(self, request, *args, **kwargs):

@@ -32,9 +32,15 @@ class PermissionMessageMixin:
 
     def handle_no_permission(self):
         if not self.request.user.is_authenticated:
-            messages.error(self.request, _("Вы не авторизованы! Пожалуйста, выполните вход."))
+            messages.error(
+                self.request,
+                _("Вы не авторизованы! Пожалуйста, выполните вход.")
+            )
             return redirect("login")
-        messages.error(self.request, _("У вас нет прав для изменения другого пользователя."))
+        messages.error(
+            self.request,
+            _("У вас нет прав для изменения другого пользователя.")
+        )
         return redirect("users:users_list")
 
 
@@ -104,7 +110,10 @@ class UsersDeleteView(
                 request,
                 _("Невозможно удалить пользователя, потому что он используется")
             )
-            logger.warning(f"Попытка удалить пользователя {user_id}, который является автором задач")
+            logger.warning(
+                f"Попытка удалить пользователя {user_id},"
+                f"который является автором задач"
+            )
             return redirect("users:users_list")
 
         # Если связей нет — вызываем стандартное удаление
