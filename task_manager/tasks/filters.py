@@ -33,7 +33,8 @@ class TaskFilter(django_filters.FilterSet):
 
     def own_tasks_filter(self, queryset, name, value):
         """
-        Фильтрует задачи, принадлежащие текущему пользователю (если value == True).
+        Фильтрует задачи, 
+        принадлежащие текущему пользователю (если value == True).
         """
         if value:
             return queryset.filter(author=self.request.user)

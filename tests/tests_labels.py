@@ -110,8 +110,6 @@ class TestLabelCRUD:
         # Метка не должна удаляться
         assert Label.objects.filter(pk=label.pk).exists()
 
-
-
     def test_detail_label(self, client_logged, label):
         url = reverse("labels:labels_detail", args=[label.pk])
         response = client_logged.get(url)

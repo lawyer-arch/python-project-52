@@ -1,6 +1,6 @@
 import logging
 from django.shortcuts import redirect
-from django.views.generic import(
+from django.views.generic import (
     ListView,
     CreateView,
     UpdateView,
@@ -114,7 +114,7 @@ class LabelDeleteView(LoginRequiredMixin, DeleteView):
         if Task.objects.filter(labels=self.object).exists():
             messages.error(
                 request,
-                "Невозможно удалить метку, " \
+                "Невозможно удалить метку,"
                 "потому что она используется в задачах"
             )
             logger.warning(
