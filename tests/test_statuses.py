@@ -13,13 +13,18 @@ class TestStatusCRUD:
     def user(self):
         return User.objects.create_user(
             username="testuser",
+            # NOSONAR
             password="password123"
         )
 
     #  Логинит тестового пользователя в Django-тестовом клиенте.
     @pytest.fixture
     def client_logged(self, client, user):
-        client.login(username="testuser", password="password123")
+        client.login(
+            username="testuser",
+            # NOSONAR
+            password="password123"
+        )
         return client
 
     #  Проверяет, что неавторизованный пользователь 

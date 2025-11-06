@@ -12,6 +12,7 @@ from task_manager.statuses.models import Status
 def user(db):
     return User.objects.create_user(
         username="user1",
+        # NOSONAR
         password="Password123"
     )
 
@@ -40,6 +41,7 @@ def label(db):
 def client_logged(client, user):
     client.login(
         username=user.username,
+        # NOSONAR
         password="Password123"
         )
     return client

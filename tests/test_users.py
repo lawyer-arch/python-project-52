@@ -16,12 +16,14 @@ class UsersViewsTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             username="testuser",
+            # NOSONAR
             password="password123",
             first_name="Test",
             last_name="User"
         )
         self.client.login(
             username="testuser",
+            # NOSONAR
             password="password123"
         )
 
@@ -48,7 +50,9 @@ class UsersViewsTest(TestCase):
             "first_name": "New",
             "last_name": "User",
             "username": "newuser",
+            # NOSONAR
             "password1": "newpassword123",
+            # NOSONAR
             "password2": "newpassword123",
         }
         response = self.client.post(url, data)
@@ -105,7 +109,9 @@ class UsersViewsTest(TestCase):
             "first_name": "New",
             "last_name": "User",
             "username": "newuser",
+            # NOSONAR
             "password1": "newpassword123",
+            # NOSONAR
             "password2": "newpassword123",
         }
         response = self.client.post(url, data, follow=True)
@@ -137,7 +143,9 @@ class RegisterFormTest(TestCase):
             "first_name": "Иван",
             "last_name": "Иванов",
             "username": "ivanov",
+            # NOSONAR
             "password1": "strongpassword123",
+            # NOSONAR
             "password2": "strongpassword123",
         }
         form = RegisterForm(data=data)
@@ -153,7 +161,9 @@ class RegisterFormTest(TestCase):
             "first_name": "Иван",
             "last_name": "Иванов",
             "username": "ivanov",
+            # NOSONAR
             "password1": "password",
+            # NOSONAR
             "password2": "differentpassword",
         }
         form = RegisterForm(data=data)
@@ -175,6 +185,7 @@ class CustomUserChangeFormTest(TestCase):
             username="testuser",
             first_name="Тестовый",
             last_name="Пользователь",
+            # NOSONAR
             password="testpass123"
         )
 
@@ -195,7 +206,9 @@ def test_user_create_logging(client, caplog):
         "username": "loguser",
         "first_name": "Log",
         "last_name": "User",
+        # NOSONAR
         "password1": "ComplexPass123!",
+        # NOSONAR
         "password2": "ComplexPass123!",
     }
     with caplog.at_level("INFO", logger="users"):

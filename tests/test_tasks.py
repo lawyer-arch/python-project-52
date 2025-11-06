@@ -11,6 +11,7 @@ from task_manager.tasks.models import Task
 def user(db):
     return User.objects.create_user(
         username="user1",
+        # NOSONAR
         password="Password123"
     )
 
@@ -32,7 +33,11 @@ def task(db, user, status):
 
 @pytest.fixture
 def client_logged(client, user):
-    client.login(username=user.username, password="Password123")
+    client.login(
+        username=user.username,
+        # NOSONAR
+        password="Password123"
+    )
     return client
 
 
