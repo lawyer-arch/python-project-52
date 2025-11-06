@@ -29,12 +29,13 @@ class FormLoggerMixin:
 
 
 class PermissionMessageMixin:
-    permission_denied_message = _("У вас нет прав для выполнения этого действия.")
-    redirect_url = "users:users_list"
 
     def handle_no_permission(self):
-        messages.error(self.request, self.permission_denied_message)
-        return redirect(self.redirect_url)
+        if not self.request.user.is_authenticated:
+            messages.error(self.request, _("Вы не авторизованы! Пожалуйста, выполните вход."))
+            return redirect("login")
+        messages.error(self.request, _("У вас нет прав для изменения другого пользователя."))
+        return redirect("users:users_list")
 
 
 class UserPermissionTestMixin(UserPassesTestMixin):
@@ -94,7 +95,7 @@ class UsersDeleteView(
         """
         Переопределяем POST, чтобы перед удалением проверить связанные задачи.
         """
-        self.object = self.get_object()  # объект берётся по pk из URL
+        self.object = self.get_object()  # объект берется по pk из URL
         user_id = self.object.id
 
         # Проверяем, есть ли задачи, автором которых является пользователь
