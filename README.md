@@ -3,6 +3,8 @@
 ### SonarQube [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=lawyer-arch_python-project-52&metric=alert_status)](https://sonarcloud.io/dashboard?id=lawyer-arch_python-project-52)
 
 
+### Sonar coverag: ![Coverage](https://sonarcloud.io/api/project_badges/measure?project=lawyer-arch_python-project-52&metric=coverage)
+
 # Task Manager
 **Менеджер задач (Task Manager)** — веб-приложение для управления задачами, аналог Redmine
 
